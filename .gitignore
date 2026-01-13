@@ -1,0 +1,69 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Build outputs
+dist/
+build/
+out/
+.next/
+.nuxt/
+.cache/
+public/build/
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+logs/
+*.log
+
+# Operating System files
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp
+.tmp/
+.temp/
+
+# Database files
+*.sqlite
+*.db
+
+# Backup files
+*.backup
+*.bak
+
+# Compiled files
+*.class
+*.pyc
+*.pyo
+__pycache__/
+
+# Testing
+coverage/
+.nyc_output/
+*.cover
+.coverage
+.pytest_cache/
+
+# Misc
+.serverless/
+.firebase/
+*.pem
+*.key
