@@ -353,6 +353,7 @@ def generate_sitemap():
 </ul>
 <div class="footer">
 <p><small>Last sitemap update: {timestamp}</small></p>
+<p><small>© 2026 Rein Velt. All rights reserved. | <a href="LICENSE">License</a></small></p>
 <a href="index.html" class="back-link">Back to Intro</a>
 </div>
 <script>
