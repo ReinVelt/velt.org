@@ -319,22 +319,13 @@
 </div>
 
 <div class="container pixel-corners">
-    <h1>Rein's Collection for Ledder</h1>
+    <h1>Ledder LED Matrix Framework</h1>
     
-    <p class="subtitle"><strong>Contribution to the Ledder Project</strong></p>
+    <p class="subtitle"><strong>Create animated pixel art and stream it to LED displays</strong></p>
     
     <hr>
     
-    <p>Ledder is a framework for creating pixel animations on LED matrices, developed by psy0rz. Within this project, I've contributed "Rein's Collection" – a collection of more than 40 animations and experiments that explore the possibilities of the framework.</p>
-    
-    <h2>About Ledder</h2>
-    
-    <p>Ledder enables you to create real-time animated pixel art and stream it to LED matrix displays. Through a web interface, you can control and adjust animations in real-time. The project supports various hardware drivers and output methods, including web browser displays, video streaming, and physical LED panels (such as Ws2812B, Hub75 and more experemental like Colorlight-5A75B FPGA controller and Chromecast).</p>
-    <p>Ledder can work on a RaspBerry Pi, a Docker instance, or bare metal: 'npm run build' and 'npm run start' will do the startup magic.</p>
-    <p><strong>Live demo:</strong> <a href="https://ledder.datux.nl" target="_blank">https://ledder.datux.nl</a><br>
-    <strong>GitHub:</strong> <a href="https://github.com/psy0rz/ledder" target="_blank">https://github.com/psy0rz/ledder</a></p>
-    
-    <h3>Live Animation Preview</h3>
+    <h3>Live Demo</h3>
     
     <div style="text-align: center; margin: 2rem 0; padding: 1rem; background-color: rgba(0, 0, 0, 0.5); border: 2px solid #ff0000;">
         <p style="margin-bottom: 1rem; color: #ffff00;"><strong>Watch Ledder in action!</strong> The iframe below shows the live demo streaming real-time animations:</p>
@@ -345,104 +336,158 @@
         <p style="margin-top: 1rem; font-size: 0.9em; color: #ff9999;"><em>Interact with the demo above to switch between different animations and adjust parameters in real-time!</em></p>
     </div>
     
-    <h2>Rein's Collection</h2>
+    <h2>What is Ledder?</h2>
     
-    <p>My contribution consists of proof-of-concept animations that demonstrate how you can create complex visual effects with relatively little code. The collection includes:</p>
+    <p>Ledder is a Node.js/TypeScript framework for creating real-time animated pixel art and streaming it to LED matrix displays. Developed by <strong>psy0rz</strong>, Ledder provides a web-based interface to control and adjust animations in real-time.</p>
     
-    <h3>3D Graphics</h3>
+    <p>The framework supports multiple output methods:</p>
     <ul>
-        <li><strong>Cube, Cubevec3, Cube2</strong> – 3D cube animations with rotations (some with intentional "bugs" that create interesting effects)</li>
-        <li><strong>DNA, Grasmaaier</strong> – 3D objects with fade effects</li>
-        <li><strong>Vwlt35</strong> – Retro racing game aesthetic with perspective and horizon effects</li>
+        <li><strong>Web Browser</strong> – Preview animations directly in your browser</li>
+        <li><strong>Physical LED Panels</strong> – WS2812B strips, HUB75 panels, ESP32 devices</li>
+        <li><strong>Video Streaming</strong> – Chromecast, video output</li>
+        <li><strong>Network Protocols</strong> – WLED, Ledstream, Pixelflut</li>
+        <li><strong>Bluetooth Displays</strong> – IDM64x64 and other Bluetooth LED matrices</li>
     </ul>
     
-    <h3>Retro Game Aesthetics</h3>
+    <h2>Installation</h2>
+    
+    <h3>Requirements</h3>
     <ul>
-        <li><strong>Digger</strong> – Inspired by the VIC-20 classic</li>
-        <li><strong>Jetfighter</strong> – ASCII-art sprite animations</li>
-        <li><strong>Eightiesdemo</strong> – 1980s demo-scene style with 3D objects, fire effects and walking sprites</li>
-        <li><strong>Slotmachine</strong> – Casino-themed animation with ASCII-art symbols</li>
+        <li>Node.js (latest LTS version recommended)</li>
+        <li>npm or Docker</li>
+        <li>Optional: FFmpeg (for video animations)</li>
     </ul>
     
-    <h3>Fractals & Generative Art</h3>
-    <ul>
-        <li><strong>Julibrot</strong> – Mandelbrot and Julia fractal sets with animated zoom</li>
-        <li><strong>Rainbowzero, Rainbowsquare</strong> – Color-geometry experiments</li>
-        <li><strong>Fireworks</strong> – Procedural fireworks effects</li>
-    </ul>
+    <h3>Option 1: Running with Node.js</h3>
     
-    <h3>Simulations</h3>
-    <ul>
-        <li><strong>Beleep, Beleep2</strong> – Life simulations (memory-intensive)</li>
-        <li><strong>Weiland</strong> – Simulation of cloud layers and grasslands</li>
-        <li><strong>Snow</strong> – Snowfall with wind effects</li>
-    </ul>
-    
-    <h3>MQTT Integrations</h3>
-    <ul>
-        <li><strong>Sensorclock32x8</strong> – Digital clock with sensor visualization for temperature, humidity and pressure</li>
-        <li><strong>MQTTClimate</strong> – MQTT sensor visualization</li>
-        <li><strong>Pong, Tankwars</strong> – Multiplayer games via MQTT</li>
-    </ul>
-    
-    <h3>Text & Media</h3>
-    <ul>
-        <li><strong>Headlines</strong> – RSS-feed display met achtergrondeffecten</li>
-        <li><strong>Photon</strong> – Marquee met meerdere kleurrijke achtergrond-animaties</li>
-        <li><strong>RemoteImages, RemoteVideo, RemotePlaylist</strong> – Laden van externe media (vereist FFmpeg voor video)</li>
-        <li><strong>Vectorfont</strong> – Vector-gebaseerde text rendering</li>
-    </ul>
-    
-    <h3>Other Experiments</h3>
-    <ul>
-        <li><strong>XmasSantaReindeer</strong> – Christmas theme with ASCII-art sprites</li>
-        <li><strong>Love</strong> – Composite animation created for a wedding</li>
-        <li><strong>Kong</strong> – ASCII animation</li>
-        <li><strong>Pixelfan</strong> – LED fan effect</li>
-    </ul>
-    
-    <h2>Technical Contributions</h2>
-    
-    <p>In addition to the animations, I also contributed to the HUB75 LED Panel Control documentation for Colorlight 5A-75B hardware, including firmware-flashing guides and hardware integration.</p>
-    
-    <h3>Techniques Used</h3>
-    <ul>
-        <li><strong>3D Projection</strong> – Custom implementation of perspective calculations and vector transformations</li>
-        <li><strong>ASCII Art Rendering</strong> – Custom DrawAsciiArtColor class for sprite animations</li>
-        <li><strong>Particle Systems</strong> – For fire, snow and explosion effects</li>
-        <li><strong>Procedural Generation</strong> – Fractals, landscapes, cloudlayers</li>
-        <li><strong>MQTT Integration</strong> – Real-time sensor data and multiplayer gaming</li>
-        <li><strong>Vector Graphics</strong> – Custom vector-font system with transformations</li>
-    </ul>
-    
-    <h2>Philosophy</h2>
-    
-    <p>This collection is meant as inspiration and a learning resource. The goal is to showcase what's possible with <strong>psy0rz's Ledder framework</strong>, not necessarily to provide production-ready code.</p>
-    
-    <p>As stated in the collection's README:</p>
+    <p>Clone the repository and install dependencies:</p>
     <blockquote>
-        "These examples are just proof-of-concepts to show how easy it is to create a ledder animation. Some animations are really nice, but some suck and will steal your computers processortime and memory to create ten-thousands of obsolete pixels. You can use this code for your own animations under the condition that you (try to) make things more pretty than i did ;-)"
+        <code>git clone https://github.com/psy0rz/ledder.git</code><br>
+        <code>cd ledder</code><br>
+        <code>npm install</code><br>
+        <code>npm run build</code>
     </blockquote>
     
-    <hr>
+    <p>Start the server:</p>
+    <blockquote>
+        <code>npm start</code>
+    </blockquote>
     
-    <h2>Credits & Thanks</h2>
-    Explore Ledder:</strong>
-        <a href="https://ledder.datux.nl" target="_blank">→ Live Demo - See Ledder in Action!</a>
-        <a href="https://github.com/psy0rz/ledder" target="_blank">→ Ledder GitHub - Main Repository by psy0rz</a>
-        <a href="https://github.com/psy0rz/ledder/wiki" target="_blank">→ Ledder Wiki - Documentation</a>
-        <a href="https://github.com/psy0rz/ledder/tree/main/ledder/animations/ReinsCollection" target="_blank">→ Rein's Collection - Source Codewerful tool that's accessible, well-documented, and constantly evolving thanks to community contributions.</p>
+    <p>It will automatically create a <code>displayconf.js</code> configuration file. Open your browser and navigate to <a href="http://localhost:3000" target="_blank">http://localhost:3000</a></p>
     
-    <hr>
+    <h3>Option 2: Running with Docker</h3>
+    
+    <p><strong>From a cloned repository:</strong></p>
+    <blockquote>
+        Create a <code>displayconf.js</code> file, then run:<br>
+        <code>docker-compose up --build</code>
+    </blockquote>
+    
+    <p><strong>Using the official Docker image:</strong></p>
+    <blockquote>
+        <code>docker run --name ledder -p 3000:3000 -v ./displayconf.js:/app/displayconf.js psy0rz/ledder</code>
+    </blockquote>
+    
+    <h2>Key Features</h2>
+    
+    <ul>
+        <li><strong>Real-time Control</strong> – Adjust animations and parameters via web interface</li>
+        <li><strong>60+ Built-in Animations</strong> – From simple patterns to complex 3D graphics</li>
+        <li><strong>TypeScript/JavaScript Development</strong> – Easy to create custom animations</li>
+        <li><strong>Multiple Display Support</strong> – Control multiple LED displays simultaneously</li>
+        <li><strong>MQTT Integration</strong> – Control via MQTT, create multiplayer games</li>
+        <li><strong>Preset System</strong> – Save and load animation configurations</li>
+        <li><strong>Flexible Layout System</strong> – Support for complex LED arrangements</li>
+    </ul>
+    
+    <h2>Display Hardware Options</h2>
+    
+    <p>Ledder supports a wide range of LED display hardware:</p>
+    
+    <h3>Easy Setup</h3>
+    <ul>
+        <li><strong>WLED via DRGB mode</strong> – Up to 400 LEDs, simple network streaming</li>
+        <li><strong>Web Browser Display</strong> – Perfect for testing and development</li>
+    </ul>
+    
+    <h3>Advanced Options</h3>
+    <ul>
+        <li><strong>Ledstream via ESP32</strong> – Up to 8 channels × 256 LEDs = 2048 total</li>
+        <li><strong>Raspberry Pi with WS2812</strong> – Standalone operation, up to 16 channels × 256 LEDs = 4096 total</li>
+        <li><strong>HUB75 Panels via Colorlight 5A-75B</strong> – FPGA-based controller for large displays</li>
+        <li><strong>Google Chromecast</strong> – Stream animations to your TV</li>
+        <li><strong>Pixelflut</strong> – Network protocol popular at hacker events and LAN parties</li>
+        <li><strong>IDM64x64 Bluetooth Display</strong> – Available on AliExpress</li>
+    </ul>
+    
+    <h2>Animation Collections</h2>
+    
+    <p>Ledder comes with several animation collections:</p>
+    
+    <h3>Core Animations (by psy0rz)</h3>
+    <ul>
+        <li>Classic effects: Fire, Plasma, Matrix rain, Rainbow patterns</li>
+        <li>Games: Snake, Tetris, Pong</li>
+        <li>Utilities: Clock displays, Weather info, Text scrollers</li>
+        <li>Visualizers: Audio spectrum, VU meters</li>
+    </ul>
+    
+    <h3>Rein's Collection (40+ animations)</h3>
+    <ul>
+        <li><strong>3D Graphics:</strong> Rotating cubes, DNA helixes, perspective racing effects</li>
+        <li><strong>Retro Games:</strong> VIC-20 Digger, ASCII jet fighters, 80s demo scene tributes</li>
+        <li><strong>Fractals:</strong> Mandelbrot/Julia sets with animated zoom</li>
+        <li><strong>Simulations:</strong> Game of Life, weather/cloud layers, snowfall with wind</li>
+        <li><strong>MQTT Games:</strong> Multiplayer Pong and Tank Wars</li>
+        <li><strong>Sensor Displays:</strong> MQTT climate data visualization with temperature/humidity</li>
+    </ul>
+    
+    <h2>Creating Your Own Animations</h2>
+    
+    <p>Ledder makes it easy to create custom animations using TypeScript or JavaScript. Check the <a href="https://github.com/psy0rz/ledder/wiki/Development" target="_blank">Development documentation</a> to get started.</p>
+    
+    <p>Basic animation structure:</p>
+    <blockquote>
+        <code>class MyAnimation extends LedderAnimation {</code><br>
+        <code>&nbsp;&nbsp;render(display, time) {</code><br>
+        <code>&nbsp;&nbsp;&nbsp;&nbsp;// Your drawing code here</code><br>
+        <code>&nbsp;&nbsp;}</code><br>
+        <code>}</code>
+    </blockquote>
+    
+    <h2>Documentation & Resources</h2>
     
     <div class="links-section">
-        <strong>Links:</strong>
-        <a href="https://github.com/psy0rz/ledder/tree/main/ledder/animations/ReinsCollection" target="_blank">→ Rein's Collection op GitHub</a>
-        <a href="https://github.com/psy0rz/ledder/wiki" target="_blank">→ Ledder Wiki</a>
-        <a href="https://ledder.datux.nl" target="_blank">→ Live Demo</a>
+        <strong>Official Resources:</strong>
+        <a href="https://ledder.datux.nl" target="_blank">→ Live Demo - Try Ledder Online</a>
+        <a href="https://github.com/psy0rz/ledder" target="_blank">→ GitHub Repository - Source Code</a>
+        <a href="https://github.com/psy0rz/ledder/wiki" target="_blank">→ Wiki - Complete Documentation</a>
+        <a href="https://github.com/psy0rz/ledder/wiki/Getting-started" target="_blank">→ Getting Started Guide</a>
+        <a href="https://github.com/psy0rz/ledder/wiki/Development" target="_blank">→ Development Guide - Create Your Own Animations</a>
     </div>
     
-    <a href="../../sitemap.html" class="back-link">◀ Back</a>
+    <div class="links-section">
+        <strong>Hardware Guides:</strong>
+        <a href="https://github.com/psy0rz/ledder/wiki/WLED-via-DRGB-mode" target="_blank">→ WLED Setup Guide</a>
+        <a href="https://github.com/psy0rz/ledder/wiki/Ledstream-via-ESP32" target="_blank">→ ESP32 Ledstream Guide</a>
+        <a href="https://github.com/psy0rz/ledder/wiki/Raspberry-PI-with-WS2812-display" target="_blank">→ Raspberry Pi WS2812 Setup</a>
+        <a href="https://github.com/psy0rz/ledder/wiki/Hub75-Colorlight-5a-75b" target="_blank">→ HUB75 Colorlight 5A-75B Guide</a>
+        <a href="https://github.com/psy0rz/ledder/wiki/Google-Chromecast" target="_blank">→ Chromecast Streaming Setup</a>
+    </div>
+    
+    <hr>
+    
+    <h2>Credits & License</h2>
+    
+    <p><strong>Ledder</strong> is developed by <strong>psy0rz (DatuX)</strong> and released under the <strong>GPL-3.0 license</strong>.</p>
+    
+    <p>Contributors include: psy0rz (DatuX), Rein Velt, Rob (Monstertov), and wallieonline.</p>
+    
+    <p>If you find Ledder useful, consider <a href="https://github.com/sponsors/psy0rz" target="_blank">sponsoring the project</a> or supporting via <a href="https://ko-fi.com/psy0rz" target="_blank">Ko-fi</a> or <a href="https://paypal.me/psy0rz" target="_blank">PayPal</a>.</p>
+    
+    <hr>
+    
+    <a href="../../sitemap.html" class="back-link">◀ Back to Site Map</a>
 </div>
 
 </body>
