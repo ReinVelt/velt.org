@@ -96,16 +96,29 @@ def generate_sitemap():
         box-sizing: border-box;
     }}
     
+    /* Elite background iframe */
+    #elite-bg {{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        z-index: -1;
+        pointer-events: auto;
+    }}
+    
     body {{
         font-family: 'Courier New', 'Courier', monospace;
         line-height: 1.4;
         max-width: 1200px;
         margin: 0 auto;
         padding: 1.5rem;
-        background-color: #000;
+        background-color: transparent;
         color: #00ff00;
         text-shadow: 0 0 2px #00ff00;
         position: relative;
+        z-index: 10;
     }}
     
     /* CRT scanlines effect */
@@ -146,6 +159,8 @@ def generate_sitemap():
     
     h1 {{
         color: #00ff00;
+        position: relative;
+        z-index: 100;
         border-bottom: 1px solid #00ff00;
         padding-bottom: 0.5rem;
         margin-bottom: 1.5rem;
@@ -169,7 +184,7 @@ def generate_sitemap():
         padding-left: 0;
         margin-left: 0;
         position: relative;
-        z-index: 10;
+        z-index: 100;
     }}
     
     ul ul {{
@@ -329,6 +344,7 @@ def generate_sitemap():
 </style>
 </head>
 <body>
+<iframe id="elite-bg" src="elite.html"></iframe>
 <h1>Rein's Cyberspaceplace - Site Map</h1>
 <div class="disclaimer">
 <p>This is the personal website of Rein Velt. A space for experiments, ideas, and projects — shared freely, without expectation of response, liking, or sharing.</p>
@@ -341,6 +357,36 @@ def generate_sitemap():
 </div>
 <script>
 document.addEventListener('DOMContentLoaded', function() {{
+    const eliteIframe = document.getElementById('elite-bg');
+    
+    // Track if mouse is over interactive content
+    let isOverContent = false;
+    
+    // Detect when mouse enters/leaves content areas
+    document.addEventListener('mouseover', function(e) {{
+        // Check if mouse is over text content, links, or interactive elements
+        if (e.target.closest('h1, ul, li, a, p, .disclaimer, .footer')) {{
+            isOverContent = true;
+            // Fade out vizier when over content
+            eliteIframe.contentWindow.postMessage({{
+                type: 'vizierOpacity',
+                opacity: 0.15
+            }}, '*');
+        }}
+    }});
+    
+    document.addEventListener('mouseout', function(e) {{
+        // Check if we're leaving content areas
+        if (!e.relatedTarget || !e.relatedTarget.closest('h1, ul, li, a, p, .disclaimer, .footer')) {{
+            isOverContent = false;
+            // Restore vizier when leaving content
+            eliteIframe.contentWindow.postMessage({{
+                type: 'vizierOpacity',
+                opacity: 1.0
+            }}, '*');
+        }}
+    }});
+    
     // Add click handlers to all folder toggles and names
     document.querySelectorAll('.folder-toggle, .folder-name').forEach(function(element) {{
         element.addEventListener('click', function(e) {{

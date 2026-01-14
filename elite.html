@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elite Wireframe Animation</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        background: #000;
+        overflow: hidden;
+        cursor: none;
+    }
+    
+    #elite-canvas {
+        display: block;
+        width: 100%;
+        height: 100vh;
+    }
+</style>
+</head>
+<body>
+<canvas id="elite-canvas"></canvas>
+
+<script>
+const canvas = document.getElementById('elite-canvas');
+const ctx = canvas.getContext('2d');
+
+// Set canvas to full window size
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// Mouse position
+let mouseX = canvas.width / 2;
+let mouseY = canvas.height / 2;
+
+// Vizier opacity (controlled by parent page)
+let vizierOpacity = 1.0;
+
+// Track mouse movement
+document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+});
+
+// Listen for opacity changes from parent window
+window.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'vizierOpacity') {
+        vizierOpacity = event.data.opacity;
+    }
+});
+
+// Hexagon rotation angle
+let rotation = 0;
+
+// Create hexagon vertices
+function createHexagon(centerX, centerY, radius) {
+    const points = [];
+    for (let i = 0; i < 6; i++) {
+        const angle = (Math.PI / 3) * i;
+        points.push({
+            x: centerX + radius * Math.cos(angle),
+            y: centerY + radius * Math.sin(angle),
+            z: 0
+        });
+    }
+    return points;
+}
+
+// Rotate point around center
+function rotatePoint(point, centerX, centerY, angleX, angleY) {
+    // Translate to origin
+    let x = point.x - centerX;
+    let y = point.y - centerY;
+    let z = point.z;
+    
+    // Rotate around Y axis
+    let cosY = Math.cos(angleY);
+    let sinY = Math.sin(angleY);
+    let tempX = x * cosY - z * sinY;
+    let tempZ = x * sinY + z * cosY;
+    x = tempX;
+    z = tempZ;
+    
+    // Rotate around X axis
+    let cosX = Math.cos(angleX);
+    let sinX = Math.sin(angleX);
+    let tempY = y * cosX - z * sinX;
+    tempZ = y * sinX + z * cosX;
+    y = tempY;
+    z = tempZ;
+    
+    // Translate back
+    return {
+        x: x + centerX,
+        y: y + centerY,
+        z: z
+    };
+}
+
+// Draw wireframe hexagon
+function drawHexagon(points) {
+    ctx.strokeStyle = '#00ff00';
+    ctx.lineWidth = 2;
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = '#00ff00';
+    
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    
+    for (let i = 1; i < points.length; i++) {
+        ctx.lineTo(points[i].x, points[i].y);
+    }
+    
+    ctx.closePath();
+    ctx.stroke();
+    
+    // Draw center lines
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    
+    ctx.strokeStyle = '#00ff00';
+    ctx.globalAlpha = 0.3;
+    for (let i = 0; i < points.length; i++) {
+        ctx.beginPath();
+        ctx.moveTo(centerX, centerY);
+        ctx.lineTo(points[i].x, points[i].y);
+        ctx.stroke();
+    }
+    ctx.globalAlpha = 1.0;
+    
+    // Draw vertices
+    ctx.fillStyle = '#00ff00';
+    for (let i = 0; i < points.length; i++) {
+        ctx.beginPath();
+        ctx.arc(points[i].x, points[i].y, 3, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
+
+// Draw Elite-style crosshair/vizier
+function drawVizier(x, y) {
+    ctx.globalAlpha = vizierOpacity;
+    ctx.strokeStyle = '#00ff00';
+    ctx.lineWidth = 1;
+    ctx.shadowBlur = 5;
+    ctx.shadowColor = '#00ff00';
+    
+    const size = 20;
+    const gap = 5;
+    
+    // Horizontal lines
+    ctx.beginPath();
+    ctx.moveTo(x - size, y);
+    ctx.lineTo(x - gap, y);
+    ctx.stroke();
+    
+    ctx.beginPath();
+    ctx.moveTo(x + gap, y);
+    ctx.lineTo(x + size, y);
+    ctx.stroke();
+    
+    // Vertical lines
+    ctx.beginPath();
+    ctx.moveTo(x, y - size);
+    ctx.lineTo(x, y - gap);
+    ctx.stroke();
+    
+    ctx.beginPath();
+    ctx.moveTo(x, y + gap);
+    ctx.lineTo(x, y + size);
+    ctx.stroke();
+    
+    // Center dot
+    ctx.fillStyle = '#00ff00';
+    ctx.beginPath();
+    ctx.arc(x, y, 2, 0, Math.PI * 2);
+    ctx.fill();
+    
+    // Outer circle
+    ctx.strokeStyle = '#00ff00';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(x, y, 30, 0, Math.PI * 2);
+    ctx.stroke();
+    
+    // Corner brackets
+    const cornerSize = 40;
+    const cornerLength = 10;
+    
+    // Top-left
+    ctx.beginPath();
+    ctx.moveTo(x - cornerSize, y - cornerSize + cornerLength);
+    ctx.lineTo(x - cornerSize, y - cornerSize);
+    ctx.lineTo(x - cornerSize + cornerLength, y - cornerSize);
+    ctx.stroke();
+    
+    // Top-right
+    ctx.beginPath();
+    ctx.moveTo(x + cornerSize - cornerLength, y - cornerSize);
+    ctx.lineTo(x + cornerSize, y - cornerSize);
+    ctx.lineTo(x + cornerSize, y - cornerSize + cornerLength);
+    ctx.stroke();
+    
+    // Bottom-left
+    ctx.beginPath();
+    ctx.moveTo(x - cornerSize, y + cornerSize - cornerLength);
+    ctx.lineTo(x - cornerSize, y + cornerSize);
+    ctx.lineTo(x - cornerSize + cornerLength, y + cornerSize);
+    ctx.stroke();
+    
+    // Bottom-right
+    ctx.beginPath();
+    ctx.moveTo(x + cornerSize - cornerLength, y + cornerSize);
+    ctx.lineTo(x + cornerSize, y + cornerSize);
+    ctx.lineTo(x + cornerSize, y + cornerSize - cornerLength);
+    ctx.stroke();
+}
+
+// Draw radar grid
+function drawRadarGrid() {
+    ctx.strokeStyle = '#002200';
+    ctx.lineWidth = 1;
+    ctx.shadowBlur = 0;
+    
+    const gridSize = 50;
+    
+    // Vertical lines
+    for (let x = 0; x < canvas.width; x += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+    }
+    
+    // Horizontal lines
+    for (let y = 0; y < canvas.height; y += gridSize) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+    }
+}
+
+// Animation loop
+function animate() {
+    // Clear canvas with darker fade effect (CRT with backlight off)
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+    // Draw background grid
+    drawRadarGrid();
+    
+    // Create and rotate hexagon
+    const centerX = canvas.width / 2;
+    const centerY = canvas.height / 2;
+    const radius = 150;
+    
+    let hexagon = createHexagon(centerX, centerY, radius);
+    
+    // Rotate hexagon
+    rotation += 0.01;
+    const rotatedHexagon = hexagon.map(point => 
+        rotatePoint(point, centerX, centerY, rotation * 0.7, rotation)
+    );
+    
+    // Draw hexagon
+    drawHexagon(rotatedHexagon);
+    
+    // Draw mouse vizier
+    drawVizier(mouseX, mouseY);
+    
+    requestAnimationFrame(animate);
+}
+
+// Handle window resize
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+});
+
+// Start animation
+animate();
+</script>
+</body>
+</html>
