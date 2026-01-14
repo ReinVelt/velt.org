@@ -108,24 +108,6 @@ def generate_sitemap():
         position: relative;
     }}
     
-    body::before {{
-        content: '';
-        position: fixed;
-        right: 4px;
-        bottom: 4px;
-        width: calc(100% - 8px);
-        height: calc(100% - 8px);
-        background-image: url('cv/rein.jpg');
-        background-position: right bottom;
-        background-repeat: no-repeat;
-        background-size: auto 70%;
-        opacity: 0.15;
-        filter: grayscale(100%) contrast(1.2);
-        mix-blend-mode: screen;
-        pointer-events: none;
-        z-index: 0;
-    }}
-    
     /* CRT scanlines effect */
     body::after {{
         content: '';
