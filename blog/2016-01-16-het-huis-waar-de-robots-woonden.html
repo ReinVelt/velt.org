@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Theo's Mechanische Aap - Workshop for Makers</title>
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    
+    body {
+        font-family: 'Georgia', 'Times New Roman', serif;
+        line-height: 1.7;
+        background-color: #fafafa;
+        color: #1a1a1a;
+        padding: 0;
+    }
+    
+    /* NRC-style header */
+    header {
+        background-color: #fff;
+        border-bottom: 3px solid #000;
+        padding: 2rem 1rem;
+        text-align: center;
+    }
+    
+    .site-title {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        font-weight: 700;
+        color: #000;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.5rem;
+    }
+    
+    .site-subtitle {
+        font-size: 1.2rem;
+        color: #666;
+        font-weight: 400;
+        font-style: italic;
+    }
+    
+    /* Main container */
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 3rem 1.5rem;
+        background-color: #fff;
+    }
+    
+    /* Introduction section */
+    .intro {
+        border-left: 4px solid #000;
+        padding-left: 1.5rem;
+        margin-bottom: 3rem;
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+    
+    .intro-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #000;
+    }
+    
+    /* Project article styling */
+    .project {
+        margin-bottom: 4rem;
+        padding-bottom: 3rem;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    .project:last-child {
+        border-bottom: none;
+    }
+    
+    .project-date {
+        font-size: 0.9rem;
+        color: #666;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.5rem;
+    }
+    
+    .project-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #000;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+    }
+    
+    .project-description {
+        font-size: 1.05rem;
+        line-height: 1.8;
+        color: #333;
+        margin-bottom: 1.5rem;
+    }
+    
+    .project-image {
+        width: 100%;
+        height: auto;
+        margin: 1.5rem 0;
+        border: 1px solid #ddd;
+    }
+    
+    .project-link {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background-color: #000;
+        color: #fff;
+        text-decoration: none;
+        font-size: 0.95rem;
+        transition: background-color 0.3s ease;
+        margin-top: 1rem;
+    }
+    
+    .project-link:hover {
+        background-color: #333;
+    }
+    
+    /* Footer */
+    footer {
+        background-color: #000;
+        color: #fff;
+        padding: 2rem 1rem;
+        text-align: center;
+        margin-top: 3rem;
+    }
+    
+    .back-link {
+        color: #fff;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border: 1px solid #fff;
+        display: inline-block;
+        transition: all 0.3s ease;
+    }
+    
+    .back-link:hover {
+        background-color: #fff;
+        color: #000;
+    }
+    
+    /* Location info */
+    .location-info {
+        background-color: #f5f5f5;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        border-left: 4px solid #666;
+    }
+    
+    .location-info strong {
+        color: #000;
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+    
+    @media (max-width: 768px) {
+        .container {
+            padding: 2rem 1rem;
+        }
+        
+        .project-title {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+</head>
+<body>
+<header>
+    <h1 class="site-title">Villa Grijpsheert</h1>
+    <p class="site-subtitle">Van Koloniaal Handelshuis tot Hackspace (2010-2019)</p>
+</header>
+
+<div class="container">
+    <article style="line-height: 1.9; font-size: 1.05rem;">
+        <h2 class="intro-title" style="font-size: 2.5rem; margin-bottom: 0.5rem; line-height: 1.2;">Het Huis waar de Robots Woonden</h2>
+        <p style="font-size: 1.1rem; color: #666; margin-bottom: 2rem; font-style: italic;">
+            Hoe een koloniaal monument in Den Haag tien jaar lang onderdak bood aan Theo's Mechanische Aap
+        </p>
+        
+        <p style="font-size: 1.2rem; font-weight: 500; line-height: 1.8; margin-bottom: 2rem;">
+            Aan de Alexander Gogelweg 12 in Den Haag staat een gebouw waar verleden en toekomst 
+            samenkomen. Villa Grijpsheert, een rijksmonument uit 1906, herbergde tot 2019 
+            Theo's Mechanische Aap – een werkplaats waar makers, ingenieurs en innovators werkten 
+            aan robotica, vliegende machines en andere technische vindingen.
+        </p>
+        
+        <h3 style="font-size: 1.5rem; margin-top: 2.5rem; margin-bottom: 1rem; font-weight: 700;">Een huis van smaragdgroene herinneringen</h3>
+        
+        <p>
+            De geschiedenis van Villa Grijpsheert begint in het koloniale tijdperk, toen Den Haag 
+            functioneerde als het administratieve hart van het Nederlandse koloniale rijk. In 1906 
+            gaf W.E. de Waard, directeur van de Maatschappij tot Exploitatie der ondernemingen 
+            Kremboong Toelangan, Sindangwangi en Gadoenbatoe, opdracht aan architect Eduard Gerard 
+            Hendrik Hubert Cuypers om een villa te ontwerpen die recht deed aan zijn status en 
+            ervaring in Nederlands-Indië.
+        </p>
+        
+        <p style="margin-top: 1.5rem;">
+            Cuypers (1859-1927) was een bijzondere architect. Gespecialiseerd in opdrachten voor 
+            Nederlands-Indische bedrijven, ontwikkelde hij een unieke signatuur waarin hij 
+            Nederlands-Indische en Chinese architectuurelementen liet versmelten met Europese 
+            historiserende stijlen. De bakstenen gevel van Villa Grijpsheert, versierd met een 
+            fries van siermetselwerk, getuigt van deze architectonische synthese. Het is een 
+            gebouw dat twee werelden verbindt: de tropische koloniale ervaring en de deftige 
+            Haagse stedenbouw.
+        </p>
+        
+        <p style="margin-top: 1.5rem;">
+            De Alexander Gogelweg werd in het begin van de twintigste eeuw een gewilde locatie 
+            voor directeuren van koloniale ondernemingen die terugkeerden naar Nederland. Villa 
+            Simpang op nummer 4, eveneens ontworpen door Cuypers – ditmaal in 1914 voor Johan 
+            Anthony Stoop, mededirecteur van de Dortse Petroleum Maatschappij – deelt dezelfde 
+            architectonische karakteristieken. Deze villa's vormden een prestigieuze enclave, 
+            een weerspiegeling van Nederlands-Indië in het hart van de hofstad.
+        </p>
+        
+        <h3 style="font-size: 1.5rem; margin-top: 2.5rem; margin-bottom: 1rem; font-weight: 700;">Van handelshuis tot hackspace</h3>
+        
+        <p>
+            Meer dan een eeuw later heeft Villa Grijpsheert een transformatie ondergaan die de 
+            makers van toen wellicht niet hadden kunnen voorzien. Waar ooit plannen voor 
+            plantage-exploitatie werden gemaakt, worden nu robots gebouwd. Waar koloniale 
+            handelaren vergaderden, solderen tegenwoordig liefhebbers aan Arduino-projecten en 
+            experimentele muziekinstrumenten.
+        </p>
+        
+        <p style="margin-top: 1.5rem;">
+            Theo's Mechanische Aap, jarenlang gehuisvest in het monumentale pand, was een non-profit 
+            stichting voor ontwikkeling, innovatie en kennisdeling. De werkplaats faciliteerde 
+            ruimte voor makers, organiseerde workshops en cursussen, en stimuleerde creatieve 
+            technische ontwikkelingen. Hier ontstonden koffiebranders en autonome vliegmachines, 
+            CNC-freesmachines en 3D-printers, poëziefoons en websites, Android-apps en andere 
+            zinvolle en nutteloze dingen – ter lering en vermaak.
+        </p>
+        
+        <p style="margin-top: 1.5rem;">
+            De werkplaats werd gedreven door passie: de drang om zelf dingen te maken, techniek 
+            te begrijpen en technische innovaties zelfstandig toe te passen. In de historische 
+            ruimtes van Villa Grijpsheert, tussen de bakstenen muren die getuigden van een 
+            koloniaal verleden, ontstond een nieuw verhaal over verbinding – niet meer door 
+            handel en exploitatie, maar door creativiteit, kennis en technologie.
+        </p>
+        
+        <h3 style="font-size: 1.5rem; margin-top: 2.5rem; margin-bottom: 1rem; font-weight: 700;">Architectuur als bruggenbouwer</h3>
+        
+        <p>
+            Het is fascinerend hoe goed de architectuur van Cuypers past bij de huidige functie 
+            van het gebouw. Net zoals de architect destijds verschillende culturen en tradities 
+            in zijn ontwerpen samensmolt, zo verbindt de werkplaats nu verschillende disciplines 
+            en kennisdomeinen. De historiserende vormgeving, met zijn mix van Oost en West, vormt 
+            een passende omlijsting voor een gemeenschap die experimenteert met grenzeloze 
+            technologie.
+        </p>
+        
+        <p style="margin-top: 1.5rem;">
+            De sierlijke fries die de gevel siert – eens bedoeld als statussymbool van koloniale 
+            rijkdom – keek jarenlang neer op een andere vorm van ambacht. Waar Cuypers vakmanschap 
+            toonde in steen en mortel, toonden de makers van Theo's Mechanische Aap hun vakmanschap 
+            in code en elektronica, in hout en metaal, in pixels en protocollen.
+        </p>
+        
+        <h3 style="font-size: 1.5rem; margin-top: 2.5rem; margin-bottom: 1rem; font-weight: 700;">Het einde van een tijdperk</h3>
+        
+        <p>
+            Begin 2019 kwam er een einde aan Theo's Mechanische Aap in Villa Grijpsheert. Rein, 
+            de drijvende kracht achter de werkplaats, verhuisde naar Drenthe en startte daar 
+            Hackerspace Drenthe in Coevorden. Het was een nieuwe stap in een voortdurend verhaal 
+            van maken en delen, maar dan in een andere context, een andere provincie, een andere 
+            gemeenschap.
+        </p>
+        
+        <p style="margin-top: 1.5rem;">
+            Villa Grijpsheert bleef achter, haar monumentale muren wachtend op een volgende fase. 
+            De jaren waarin robots door de gangen reden en soldeerbouten gloeiden in de historische 
+            kamers werden geschiedenis. Maar het idee – dat oude gebouwen nieuwe verhalen kunnen 
+            vertellen, dat erfgoed kan worden getransformeerd zonder zijn essentie te verliezen – 
+            dat blijft bestaan.
+        </p>
+        
+        <div style="background-color: #f9f9f9; padding: 2rem; margin: 2.5rem 0; border-left: 4px solid #000;">
+            <p style="font-style: italic; font-size: 1.1rem; line-height: 1.8; margin: 0;">
+                "Villa Grijpsheert blijft, ondanks zijn controversiële koloniale geschiedenis, een 
+                gebouw dat werelden verbond. De ironie is niet te missen: waar eens het kapitaal 
+                uit de koloniën werd geadministreerd, werd gewerkt aan open-source technologie 
+                en kennisdeling. Het was een transformatie die richting gaf aan hoe we met ons 
+                gebouwde erfgoed kunnen omgaan – niet door het te negeren, maar door het nieuwe 
+                betekenis te geven. Van 2010 tot 2019 was Villa Grijpsheert niet alleen een 
+                werkplaats, maar ook een statement: geschiedenis hoeft geen obstakel te zijn voor 
+                de toekomst."
+            </p>
+        </div>
+        
+        <h3 style="font-size: 1.5rem; margin-top: 2.5rem; margin-bottom: 1rem; font-weight: 700;">Epiloog: De Villa leeft door</h3>
+        
+        <p>
+            Villa Grijpsheert aan de Alexander Gogelweg werd rond 2010 gekraakt door 
+            kunstenaarsvereniging Luxus. Wat begon als een statement over leegstand en 
+            cultuurruimte, groeide uit tot een langdurig project. Een half jaar tot een jaar 
+            na de kraak kreeg Theo's Mechanische Aap een kamer in de kelder toegewezen. Het 
+            was een symbiose die werkte: boven de kunstenaars, beneden de makers.
+        </p>
+        
+        <p style="margin-top: 1.5rem;">
+            Tot op dit moment wordt het pand nog steeds bewoond en beheerd door Luxus. In 
+            diezelfde kelder waar Theo's Mechanische Aap ooit experimenteerde met elektronica, 
+            zit tegenwoordig EVsmart – een bedrijf dat hardware en software ontwikkelt voor 
+            laadpalen. Het is een opmerkelijke voortzetting van de makerstraditie, zij het in 
+            een meer commerciële vorm.
+        </p>
+        
+        <p style="margin-top: 1.5rem;">
+            Richard, de lead engineer van EVsmart, woont in de villa sinds de kraak. Een lange, 
+            slanke man met lang haar en vaak een baard – het prototype van de hacker <em>pur sang</em>. 
+            Hij kan compilers optimaliseren, toveren met low-level machinecode, elke microcontroller 
+            en microprocessor temmen. Bij Theo's Mechanische Aap vond Richard destijds zijn plek, 
+            een omgeving waar hij volledig zichzelf kon zijn, waar zijn obsessieve interesse in de 
+            diepste lagen van computers niet alleen werd getolereerd, maar gewaardeerd.
+        </p>
+        
+        <p style="margin-top: 1.5rem;">
+            De verbinding tussen toen en nu is directer dan het toeval doet vermoeden. Bram, 
+            de CEO van EVsmart, nam in de begintijd contact op met Theo's Mechanische Aap. Of 
+            ze konden helpen om open-source hardware aan te passen voor laadpalen? Het was precies 
+            het soort vraag waar de werkplaats voor bestond: een technisch vraagstuk, de nadruk 
+            op open technologie, de wil om samen iets nieuws te bouwen.
+        </p>
+        
+        <p style="margin-top: 1.5rem;">
+            Tegenwoordig is EVsmart een succesvol bedrijf, met meerdere ex-leden van Theo's 
+            Mechanische Aap in dienst. De werkplaats is weg, maar de kennis, de netwerken, de 
+            werkwijze – die zijn doorgestroomd in nieuwe structuren. Het is misschien wel de 
+            mooiste erfenis van Theo's Mechanische Aap: niet een instituut dat eeuwig voortbestaat, 
+            maar een cultuur die zich verspreidt, die wortel schiet op nieuwe plekken.
+        </p>
+        
+        <p style="margin-top: 1.5rem;">
+            In de kelder van Villa Grijpsheert, tussen de historische fundamenten van Cuypers' 
+            ontwerp, werken Richards vingers nog steeds door code. Boven hem beheren de leden 
+            van Luxus een leefgemeenschap in de ruimtes waar eens koloniaal kapitaal werd 
+            geadministreerd. De geest van Theo's Mechanische Aap leeft voort in Hackerspace 
+            Drenthe in Coevorden, maar ook hier, in de villa waar het allemaal begon. Geschiedenis 
+            herhaalt zich niet, maar ze raakt in Villa Grijpsheert wel steeds opnieuw aan de toekomst.
+        </p>
+        
+        <p style="margin-top: 2rem; font-size: 0.95rem; color: #666; padding-top: 2rem; border-top: 1px solid #ddd;">
+            <strong>Bronnen:</strong><br>
+            Monumentenzorg Den Haag, <em>Sporen van Smaragd: Alexander Gogelweg</em><br>
+            Nederlands Architectuur Instituut, <em>Archieven Eduard Cuypers</em><br>
+            DBNL, <em>Jaarboek Monumentenzorg 1994</em>
+        </p>
+    </article>
+
+</div>
+
+<footer>
+    <p style="margin-bottom: 1rem;">
+        <strong>Theo's Mechanische Aap</strong><br>
+        Stichting voor Ontwikkeling, Innovatie en Kennisdeling
+    </p>
+    <p style="margin-bottom: 1.5rem; font-size: 0.9rem; color: #ccc;">
+        Website: <a href="https://mechanicape.nl/" target="_blank" rel="noopener" style="color: #fff;">mechanicape.nl</a>
+    </p>
+    <a href="../../sitemap.html" class="back-link">← Back to Sitemap</a>
+</footer>
+</body>
+</html>

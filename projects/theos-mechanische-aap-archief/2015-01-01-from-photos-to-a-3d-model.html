@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>From photos to a 3d model - Theo's Mechanische Aap</title>
+    <style>
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 0 20px;
+            line-height: 1.8;
+            color: #1a1a1a;
+            background: #f9f9f9;
+        }
+        
+        header {
+            border-bottom: 3px solid #000;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.2em;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            line-height: 1.2;
+        }
+        
+        .date {
+            font-size: 0.9em;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        article {
+            background: white;
+            padding: 40px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        p {
+            margin: 1.5em 0;
+            text-align: justify;
+            font-size: 1.1em;
+        }
+        
+        p:first-of-type::first-letter {
+            font-size: 3.5em;
+            line-height: 0.8;
+            float: left;
+            margin: 0.1em 0.1em 0 0;
+            font-weight: bold;
+        }
+        
+        .images {
+            margin: 30px 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .images img {
+            width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            padding: 5px;
+            background: white;
+        }
+        
+        .links, .attachments {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f5f5f5;
+            border-left: 3px solid #333;
+        }
+        
+        .links h3, .attachments h3 {
+            margin: 0 0 10px 0;
+            font-size: 1em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .links ul, .attachments ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .links li, .attachments li {
+            margin: 5px 0;
+        }
+        
+        .links a, .attachments a {
+            color: #000;
+            text-decoration: none;
+            border-bottom: 1px solid #666;
+        }
+        
+        .links a:hover, .attachments a:hover {
+            border-bottom: 2px solid #000;
+        }
+        
+        footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        footer a {
+            color: #000;
+            text-decoration: none;
+            border-bottom: 1px solid #000;
+        }
+        
+        footer a:hover {
+            border-bottom: 2px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>From photos to a 3d model</h1>
+        <p class="date">2015-01-01 - Theo's Mechanische Aap</p>
+    </header>
+    
+    <article>
+        <p>Create a 3d modelThere are different ways how you can turn the photos into a 3d model. Personally I like autodesk’ recap the best.</p>
+
+        <p>Go torecap.autodesk.com. If you do not have an autodesk account yet, you can create one for free. It comes with 5Gb of storage, which is plenty enough to create your 3d model.</p>
+
+        <p>After you have logged in to recap, click on the new project button. Here you can select the quality of your 3d model (I always choose Ultra, why settle for lower). For the export format, most 3d printer software can directly work with .obj files, so at least select that one.</p>
+
+        <p>After that you can upload all your images by dragging them into your webbrowser, or by clicking you get a popup windows where you can select your photos.</p>
+
+        <p>Wait for the photos to be uploaded and click next 2 times. The autodesk cloud system will now start to do the hard work and turn your photos into a 3d model. This can take between 15 and 45 minutes. As this is happening “in the cloud”, you can do other things while waiting</p>
+
+        <p>When the heavy computing is done you can click in the middle of the thumbnail (on the eye) to see the model in 3d on your webbrowser.Important: this requires the Chrome webbrowser!</p>
+
+        <p>When viewing your 3d model, you should see a thumbnail gallery of your images on the left. If all went well, you should NOT have many (or ideally none) in the list called “Not Stitched”. This would mean that those images where not detected. You can try to fix this by manually clicking marking points on the images. But as I said, hopefully the 3d scanner took good enough photos of you that this is not needed.</p>
+
+        <p>You can now download the .OBJ file to your local computer for further processing and clean up, like removing the background. The file you download is again a zip file. So you need to unzip this before moving on to the next step.</p>
+
+        <p>Cleaning up your 3d model.There are many programs available to clean up your 3d model. The easiest program I have found to do this is also a free product from autodesk called “project memento”. You can download memento (Only for windows!) here:http://labs.autodesk.com/utilities/memento</p>
+
+        <p>After you have installed project memento, you can directly open up the downloaded .obj file, it should be called mesh.obj. The photos taken by the 3d scanner are 90degrees turned. This means that your model probably has an incorrect feeling for up and down. In the botton left you will get a message “did the orbiting feel off?”. Click on “feels off” to correct this.</p>
+
+        <p>You correct the orbit, click for instance on the top of your head, making sure that the arrow is pointing up. Try rotating the model (by keeping your right mouse button pressed). If it feels good now you can accept the setting.</p>
+
+        <p>As you can see, you where not only scanned, but also part of your environment. You probably want to cut those pieces away. This is very easy in memento. Just select with your mouse a region of unwanted stuff and then hit delete. By rotating the model around you should be able to easily select and remove all unwanted stuff.</p>
+
+        <p>Fix your model for 3d printing.To be able to print your model on your 3d printer, you need to make sure you have a watertight model (no holes in it). Again this can easyly be fixed with memento. Click on the top middle of the memento window and you will see a popup to fix your model.</p>
+
+        <p>Just walk thru the wizard and any hole issue it finds, click on fix. You need to select if you want a flat or smooth fix. For me usually the flat fix works best. Select “next” again to find more issues. The holes need to be fixed, everything else is optional.</p>
+
+        <p>After you have fixed all the holes, click done and now you can export the model as a new .obj file. You can do this by going to the top left corner of the mement program and click on the bended arrow.</p>
+
+        <div class="links">
+            <h3>Gerelateerde links</h3>
+            <ul>
+                <li><a href="http://recap.autodesk.com/" target="_blank">recap.autodesk.com</a></li>
+                <li><a href="http://labs.autodesk.com/utilities/memento" target="_blank">http://labs.autodesk.com/utilities/memento</a></li>
+                <li><a href="http://pixologic.com/sculptris/" target="_blank">Pixologic Sculptris</a></li>
+                <li><a href="http://meshmixer.com/" target="_blank">Meshmixer</a></li>
+                <li><a href="http://www.123dapp.com/catch" target="_blank">Autodesk 123d Catch</a></li>
+                <li><a href="http://ccwu.me/vsfm/" target="_blank">VisualSFM</a></li>
+                <li><a href="http://www.agisoft.ru/products/photoscan/standard/" target="_blank">Agisoft Photoscan Standard Edition</a></li>
+            </ul>
+        </div>
+
+    </article>
+    
+    <footer>
+        <p><a href="../../sitemap.html">← Terug naar sitemap</a></p>
+    </footer>
+</body>
+</html>

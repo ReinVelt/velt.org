@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wavefront algoritme - Theo's Mechanische Aap</title>
+    <style>
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 0 20px;
+            line-height: 1.8;
+            color: #1a1a1a;
+            background: #f9f9f9;
+        }
+        
+        header {
+            border-bottom: 3px solid #000;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.2em;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            line-height: 1.2;
+        }
+        
+        .date {
+            font-size: 0.9em;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        article {
+            background: white;
+            padding: 40px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        p {
+            margin: 1.5em 0;
+            text-align: justify;
+            font-size: 1.1em;
+        }
+        
+        p:first-of-type::first-letter {
+            font-size: 3.5em;
+            line-height: 0.8;
+            float: left;
+            margin: 0.1em 0.1em 0 0;
+            font-weight: bold;
+        }
+        
+        .images {
+            margin: 30px 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .images img {
+            width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            padding: 5px;
+            background: white;
+        }
+        
+        .links, .attachments {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f5f5f5;
+            border-left: 3px solid #333;
+        }
+        
+        .links h3, .attachments h3 {
+            margin: 0 0 10px 0;
+            font-size: 1em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .links ul, .attachments ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .links li, .attachments li {
+            margin: 5px 0;
+        }
+        
+        .links a, .attachments a {
+            color: #000;
+            text-decoration: none;
+            border-bottom: 1px solid #666;
+        }
+        
+        .links a:hover, .attachments a:hover {
+            border-bottom: 2px solid #000;
+        }
+        
+        footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        footer a {
+            color: #000;
+            text-decoration: none;
+            border-bottom: 1px solid #000;
+        }
+        
+        footer a:hover {
+            border-bottom: 2px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Wavefront algoritme</h1>
+        <p class="date">2015-01-01 - Theo's Mechanische Aap</p>
+    </header>
+    
+    <article>
+        <p>Dit artikel is vertaald vanhttp://www.societyofrobots.com/programming_wavefront.shtml</p>
+
+        <p>Robot mapping en navigatieDe theorieën achter robot doolhof navigatie zijn enorm.Dus om het simpel te houden leer je in deze tutorial  een van de meest elementaire, maar nog steeds krachtige methodes van de intelligente robot navigatie.</p>
+
+        <p>Stap 1: Maak een KaartMaak een XY-grid-matrix om de lege ruimte, robot / doel locaties, en obstakels te markeren.</p>
+
+        <p>Bijvoorbeeld, dit is een foto van mijn keuken.De doos is een obstakel.</p>
+
+        <p>Vervolgens leggen we hier een raster overheen</p>
+
+        <p>Vervolgens heb ik de grenzen (rood) onbegaanbaar verklaard, evenals gebieden die zijn  geblokkeerd door rood.</p>
+
+        <p>Maar dit is natuurlijk niet wat het echt uit ziet in de robot geheugen.In plaats daarvan lijkt veel meer op deze matrix hieronder.0=onbegaanbaar  R=robot .</p>
+
+        <p>Opmerking: In mijn broncode Ik gebruikte de onderstaande waarden.Mijn voorbeelden zijn hier net vereenvoudigingen, zodat u gemakkelijker kunt algoritme begrijpen van de golffront.</p>
+
+        <p>Een voorbeeld van een kaart matrix in C ziet er als volgt uit:</p>
+
+        <p>Stap 2: Voeg  Doel en Robot LocatiestoeVolgende moet de robot zijn doellocatie kiezen, G .We gaan ervan uit dat deze robot kan alleen 90 graden draaien.</p>
+
+        <p>In mijn broncode noem ik deze functie:new_state = propagate_wavefront (robot_x, robot_y, goal_x, goal_y);</p>
+
+        <p>robot_x en robot_y markeert de robots 'coördineert, en goal_x en goal_y is natuurlijk het doel locatie.</p>
+
+        <p>Stap 3: Vul WavefrontDit is waar het wordt een beetje moeilijk zo kaal met mij hier.In een notendop het algoritme zal controleren node node, beginnend in de linkerbovenhoek, welke knooppunten het ligt naast.Negeer muren, kijk naar knooppunten rond uw doelgroep node, dan tellen op.Bijvoorbeeld, als een aangrenzend knooppunt heeft de nummer 5, en zijn de laagste grenzend node, maak doelnode een 6.Houd het scannen van de matrix tot de robot node grenst aan een nummer. Na deze pseudocode Ziek toon u grafische voorbeelden.</p>
+
+        <p>Hier is een grafisch voorbeeld.Het doel en de robot locaties zijn al gemarkeerd op de kaart.Nu door de matrix een knooppunt in een tijd, ik heb al gescand door de eerste 2 kolommen (X).Op kolom 3, gescande ik het over halverwege tot ik bereikte de 5e node.Het controleren van grenzen knooppunten is het naast het doel.Dus ik merk dit knooppunt met een 3, zoals afgebeeld.</p>
+
+        <p>Voortbordurend op de 3e kolom, blijf ik naar beneden node node.Ik check voor de aangrenzende knooppunten, en voeg +1 om de doelnode.Zoals je kunt zien, de rest van de kolom krijgt de ingevuld de 'wave' actie mededeling, maar toch? Dit is de reden waarom het is wel een golffront.Het is ook wel de Brushfire algoritme omdat het verspreidt zich als een Brushfire...</p>
+
+        <div class="links">
+            <h3>Gerelateerde links</h3>
+            <ul>
+                <li><a href="http://www.societyofrobots.com/programming_wavefront.shtml" target="_blank">http://www.societyofrobots.com/programming_wavefront.shtml</a></li>
+            </ul>
+        </div>
+
+    </article>
+    
+    <footer>
+        <p><a href="../../sitemap.html">← Terug naar sitemap</a></p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theo's Mechanische Aap - Archief</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #f5f5f5;
+            color: #1a1a1a;
+        }
+        
+        header {
+            background: #000;
+            color: #fff;
+            padding: 40px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.1em;
+            opacity: 0.8;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .article-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        .article-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            background: #e0e0e0;
+            display: block;
+        }
+        
+        .article-content {
+            padding: 25px;
+        }
+        
+        .article-date {
+            font-size: 0.85em;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        
+        .article-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.3;
+            color: #000;
+        }
+        
+        .article-excerpt {
+            font-size: 1em;
+            line-height: 1.6;
+            color: #444;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .article-meta {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            font-size: 0.85em;
+            color: #999;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            font-size: 1.2em;
+            color: #666;
+        }
+        
+        .loading::after {
+            content: '...';
+            animation: dots 1.5s steps(4, end) infinite;
+        }
+        
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            background: #000;
+            color: #fff;
+            margin-top: 60px;
+        }
+        
+        footer a {
+            color: #fff;
+            text-decoration: none;
+            border-bottom: 1px solid #fff;
+            padding-bottom: 2px;
+        }
+        
+        footer a:hover {
+            border-bottom: 2px solid #fff;
+        }
+        
+        @media (max-width: 768px) {
+            .articles-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Theo's Mechanische Aap</h1>
+        <p>Archief 2009-2020</p>
+    </header>
+    
+    <div class="container">
+        <div class="articles-grid" id="articlesGrid"></div>
+        <div class="loading" id="loading" style="display: none;">Meer artikelen laden</div>
+    </div>
+    
+    <footer>
+        <p><a href="../../sitemap.html">← Terug naar sitemap</a></p>
+    </footer>
+    
+    <script>
+        let allArticles = [];
+        let displayedArticles = 0;
+        const articlesPerLoad = 12;
+        let isLoading = false;
+        
+        // Extract article metadata from HTML files
+        async function loadArticles() {
+            const response = await fetch('.');
+            const html = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            const links = Array.from(doc.querySelectorAll('a'))
+                .map(a => a.getAttribute('href'))
+                .filter(href => href && href.endsWith('.html') && href !== 'index.html');
+            
+            // Load each article's metadata
+            const articles = [];
+            for (const href of links) {
+                try {
+                    const articleResponse = await fetch(href);
+                    const articleHtml = await articleResponse.text();
+                    const articleDoc = parser.parseFromString(articleHtml, 'text/html');
+                    
+                    const title = articleDoc.querySelector('h1')?.textContent || 'Untitled';
+                    const date = articleDoc.querySelector('.date')?.textContent || '';
+                    const firstParagraph = articleDoc.querySelector('article p')?.textContent || '';
+                    const firstImage = articleDoc.querySelector('article img')?.src || '';
+                    const images = articleDoc.querySelectorAll('article img').length;
+                    const links = articleDoc.querySelectorAll('.links a').length;
+                    const attachments = articleDoc.querySelectorAll('.attachments a').length;
+                    
+                    // Extract date for sorting
+                    const dateMatch = href.match(/^(\d{4}-\d{2}-\d{2})/);
+                    const sortDate = dateMatch ? dateMatch[1] : '1900-01-01';
+                    
+                    articles.push({
+                        href,
+                        title,
+                        date,
+                        excerpt: firstParagraph.substring(0, 200),
+                        image: firstImage,
+                        images,
+                        links,
+                        attachments,
+                        sortDate
+                    });
+                } catch (e) {
+                    console.error(`Error loading ${href}:`, e);
+                }
+            }
+            
+            // Sort by date (newest first)
+            articles.sort((a, b) => b.sortDate.localeCompare(a.sortDate));
+            
+            return articles;
+        }
+        
+        function createArticleCard(article) {
+            const card = document.createElement('div');
+            card.className = 'article-card';
+            card.onclick = () => window.location.href = article.href;
+            
+            const imageHtml = article.image 
+                ? `<img src="${article.image}" alt="${article.title}" class="article-image" loading="lazy">`
+                : `<div class="article-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>`;
+            
+            const metaParts = [];
+            if (article.images > 0) metaParts.push(`${article.images} foto's`);
+            if (article.links > 0) metaParts.push(`${article.links} links`);
+            if (article.attachments > 0) metaParts.push(`${article.attachments} bestanden`);
+            
+            card.innerHTML = `
+                ${imageHtml}
+                <div class="article-content">
+                    <div class="article-date">${article.date}</div>
+                    <h2 class="article-title">${article.title}</h2>
+                    <p class="article-excerpt">${article.excerpt}</p>
+                    ${metaParts.length > 0 ? `<div class="article-meta">${metaParts.join(' • ')}</div>` : ''}
+                </div>
+            `;
+            
+            return card;
+        }
+        
+        function displayMoreArticles() {
+            if (isLoading) return;
+            
+            const grid = document.getElementById('articlesGrid');
+            const toDisplay = allArticles.slice(displayedArticles, displayedArticles + articlesPerLoad);
+            
+            toDisplay.forEach(article => {
+                grid.appendChild(createArticleCard(article));
+            });
+            
+            displayedArticles += toDisplay.length;
+            
+            // Hide loading indicator if all articles are displayed
+            if (displayedArticles >= allArticles.length) {
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+        
+        // Infinite scroll
+        function checkScroll() {
+            const loading = document.getElementById('loading');
+            const rect = loading.getBoundingClientRect();
+            
+            if (rect.top < window.innerHeight + 200 && displayedArticles < allArticles.length) {
+                displayMoreArticles();
+            }
+        }
+        
+        // Initialize
+        async function init() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('loading').textContent = 'Artikelen laden';
+            
+            allArticles = await loadArticles();
+            
+            document.getElementById('loading').textContent = 'Meer artikelen laden';
+            displayMoreArticles();
+            
+            window.addEventListener('scroll', checkScroll);
+            window.addEventListener('resize', checkScroll);
+        }
+        
+        init();
+    </script>
+</body>
+</html>

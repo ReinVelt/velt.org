@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weerstation project - Theo's Mechanische Aap</title>
+    <style>
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 0 20px;
+            line-height: 1.8;
+            color: #1a1a1a;
+            background: #f9f9f9;
+        }
+        
+        header {
+            border-bottom: 3px solid #000;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.2em;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            line-height: 1.2;
+        }
+        
+        .date {
+            font-size: 0.9em;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        article {
+            background: white;
+            padding: 40px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        p {
+            margin: 1.5em 0;
+            text-align: justify;
+            font-size: 1.1em;
+        }
+        
+        p:first-of-type::first-letter {
+            font-size: 3.5em;
+            line-height: 0.8;
+            float: left;
+            margin: 0.1em 0.1em 0 0;
+            font-weight: bold;
+        }
+        
+        .images {
+            margin: 30px 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .images img {
+            width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            padding: 5px;
+            background: white;
+        }
+        
+        .links, .attachments {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f5f5f5;
+            border-left: 3px solid #333;
+        }
+        
+        .links h3, .attachments h3 {
+            margin: 0 0 10px 0;
+            font-size: 1em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .links ul, .attachments ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .links li, .attachments li {
+            margin: 5px 0;
+        }
+        
+        .links a, .attachments a {
+            color: #000;
+            text-decoration: none;
+            border-bottom: 1px solid #666;
+        }
+        
+        .links a:hover, .attachments a:hover {
+            border-bottom: 2px solid #000;
+        }
+        
+        footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        footer a {
+            color: #000;
+            text-decoration: none;
+            border-bottom: 1px solid #000;
+        }
+        
+        footer a:hover {
+            border-bottom: 2px solid #000;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Weerstation project</h1>
+        <p class="date">2018-12-15 - Theo's Mechanische Aap</p>
+    </header>
+    
+    <article>
+        <p>De afgelopen dagen hebben Louis, Marco en Rein een plannetje bedacht om een weerstation te maken. Het apparaat zou minimaal de volgende specs moeten krijgen:</p>
+
+        <p>Eenvoudig te installeren (wel technisch inzicht maar geen programmeerkennis noodzakelijk)</p>
+
+        <p>Meten van temperatuur, luchtvochtigheid en luchtdruk</p>
+
+        <p>Optioneel meten van neerslag, windrichting, windkracht en alles wat verder interessant zou kunnen zijn</p>
+
+        <p>Draadloze verbinding om data door te sturen naar het basestation en internet</p>
+
+        <p>Mogelijkheid om alles grafisch weer te geven in een webbrowser of app</p>
+
+        <p>We zijn op dit moment druk bezig om onderdelen te printen en printen in elkaar te zetten.</p>
+
+        <p>De inspiratie voor dit project ishttps://www.thingiverse.com/thing:2849562De microcontroller is een ESP8266 in de nodemcu uitvoering (met usb aansluiting).We hebben voor de esp gekozen omdat deze goedkoop is (3 euro) en standaard wifi aan boord heeft.De software voor de microcontroller is espeasy (https://www.letscontrolit.com/wiki/index.php/ESPEasy#Get_started)</p>
+
+        <p>Voor de sensoren hebben we een DHT22 sensor genomen voor temperatuur en luchtvochtigheidAls barometer hebben we een BMP180 sensor gekozen.Voor de windmeter, windrichtingmeter en regenmeter wordt gebruik gemaakt van reed-contactenBeide sensoren worden ondersteund door espeasy, dus programmeren is niet nodig.</p>
+
+        <p>De sensoren worden in een 3d geprintte schelpentoren (zie foto Nr....)  bestaande uit een dak, vier vinnen, een mounthouder en een mountbeugel.Hierin wordt een electronika houder gemonteerd waar de DHT22 sensor en de BMP280 in gemonteerd.De schelpentoren zorgt er voor dat de regen geen invloed heeft op de sensoren en dat de sensoren toch in een open ruimte zitten.</p>
+
+        <p>Marco heeft een volledige setup werkend in Den Haag.Rein is bezig met een deluxe versie (met zonnepanelen en extra sensoren)  in Emmer-Compascuum</p>
+
+        <div class="images">
+            <img src="https://mechanicape.nl/sites/default/files/styles/1200w/public/processor-behuizing.jpeg?itok=Ir8lfh6C" alt="Project afbeelding" loading="lazy">
+            <img src="https://mechanicape.nl/sites/default/files/styles/1200w/public/microcontroller-sensoren.jpeg?itok=7qszZthZ" alt="Project afbeelding" loading="lazy">
+            <img src="https://mechanicape.nl/sites/default/files/styles/1200w/public/powerbank.jpeg?itok=q2r-V5Dc" alt="Project afbeelding" loading="lazy">
+            <img src="https://mechanicape.nl/sites/default/files/styles/1200w/public/regenmeter-onderdeel.jpeg?itok=QiAGLJqB" alt="Project afbeelding" loading="lazy">
+            <img src="https://mechanicape.nl/sites/default/files/styles/1200w/public/grafana.jpeg?itok=OBnzyldh" alt="Project afbeelding" loading="lazy">
+            <img src="https://mechanicape.nl/sites/default/files/styles/1200w/public/behuizngen.jpeg?itok=ga_HJu0I" alt="Project afbeelding" loading="lazy">
+            <img src="https://mechanicape.nl/sites/default/files/styles/1200w/public/windmeter2.jpeg?itok=IL95W8rf" alt="Project afbeelding" loading="lazy">
+            <img src="https://mechanicape.nl/sites/default/files/styles/1200w/public/behuizngen3.jpeg?itok=cPV-avBz" alt="Project afbeelding" loading="lazy">
+        </div>
+
+        <div class="links">
+            <h3>Gerelateerde links</h3>
+            <ul>
+                <li><a href="https://www.thingiverse.com/thing:2849562" target="_blank">https://www.thingiverse.com/thing:2849562</a></li>
+            </ul>
+        </div>
+
+    </article>
+    
+    <footer>
+        <p><a href="../../sitemap.html">← Terug naar sitemap</a></p>
+    </footer>
+</body>
+</html>

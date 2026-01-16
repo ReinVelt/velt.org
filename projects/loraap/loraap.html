@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LoRaAP - LoRa Analyzer Project | Rein's Projects</title>
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    
+    body {
+        font-family: 'Courier New', 'Courier', monospace;
+        line-height: 1.6;
+        background-color: #000;
+        color: #00ff00;
+        padding: 1rem;
+        overflow-x: hidden;
+        position: relative;
+    }
+    
+    /* LoRa packet background animation */
+    #packet-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+        overflow: hidden;
+    }
+    
+    .lora-packet {
+        position: absolute;
+        font-family: 'Courier New', monospace;
+        font-size: 0.7rem;
+        white-space: nowrap;
+        opacity: 0;
+        animation: packetFloat 15s linear infinite;
+        padding: 0.3rem 0.5rem;
+        border: 1px solid;
+        border-radius: 3px;
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+    
+    .packet-ttn {
+        color: #00ff00;
+        border-color: #00ff00;
+        box-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+    }
+    
+    .packet-meshtastic {
+        color: #00ffff;
+        border-color: #00ffff;
+        box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+    }
+    
+    .packet-meshcore {
+        color: #ffff00;
+        border-color: #ffff00;
+        box-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+    }
+    
+    @keyframes packetFloat {
+        0% {
+            opacity: 0;
+            transform: translateY(100vh) translateX(var(--start-x));
+        }
+        5% {
+            opacity: 0.7;
+        }
+        95% {
+            opacity: 0.7;
+        }
+        100% {
+            opacity: 0;
+            transform: translateY(-10vh) translateX(var(--end-x));
+        }
+    }
+    
+    /* Radio wave background effect */
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: 
+            radial-gradient(ellipse at center, rgba(0, 255, 0, 0.05) 0%, transparent 50%),
+            radial-gradient(ellipse at center, rgba(0, 255, 0, 0.03) 0%, transparent 70%);
+        pointer-events: none;
+        z-index: 2;
+        animation: pulse 4s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 0.6; }
+    }
+    
+    body::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+        pointer-events: none;
+        z-index: 0;
+    }
+    
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        background-color: rgba(0, 0, 0, 0.95);
+        border: 3px solid #00ff00;
+        padding: 2rem;
+        box-shadow: 
+            0 0 20px rgba(0, 255, 0, 0.5),
+            inset 0 0 30px rgba(0, 255, 0, 0.1);
+        position: relative;
+        z-index: 10;
+    }
+    
+    /* Frequency display marquee */
+    .frequency-display {
+        width: 100%;
+        overflow: hidden;
+        background-color: #001a00;
+        border: 2px solid #00ff00;
+        padding: 0.5rem;
+        margin-bottom: 2rem;
+        box-shadow: inset 0 0 10px rgba(0, 255, 0, 0.3);
+        font-family: 'Courier New', monospace;
+        text-align: center;
+    }
+    
+    .frequency-text {
+        color: #00ff00;
+        font-size: 1.1em;
+        font-weight: bold;
+        text-shadow: 0 0 5px #00ff00;
+        animation: blink 2s ease-in-out infinite;
+    }
+    
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+    }
+    
+    h1 {
+        color: #00ff00;
+        font-size: clamp(1.5rem, 5vw, 2.5rem);
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        text-shadow: 
+            0 0 10px #00ff00,
+            0 0 20px #00ff00,
+            0 0 30px #00ff00;
+        animation: glow 2s ease-in-out infinite alternate;
+    }
+    
+    @keyframes glow {
+        from { 
+            text-shadow: 
+                0 0 10px #00ff00,
+                0 0 20px #00ff00,
+                0 0 30px #00ff00;
+        }
+        to { 
+            text-shadow: 
+                0 0 20px #00ff00,
+                0 0 30px #00ff00,
+                0 0 40px #00ff00,
+                0 0 50px #00ff00;
+        }
+    }
+    
+    .subtitle {
+        color: #00aa00;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        font-style: italic;
+    }
+    
+    .status-badge {
+        display: inline-block;
+        background-color: #003300;
+        color: #00ff00;
+        padding: 0.3rem 0.8rem;
+        border: 1px solid #00ff00;
+        border-radius: 3px;
+        font-size: 0.9rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+    }
+    
+    h2 {
+        color: #00ff00;
+        font-size: 1.5rem;
+        margin: 2rem 0 1rem 0;
+        border-bottom: 2px solid #00ff00;
+        padding-bottom: 0.5rem;
+        text-shadow: 0 0 10px #00ff00;
+    }
+    
+    h3 {
+        color: #00ff00;
+        font-size: 1.2rem;
+        margin: 1.5rem 0 0.8rem 0;
+        text-shadow: 0 0 5px #00ff00;
+    }
+    
+    p {
+        margin-bottom: 1rem;
+        color: #00dd00;
+        text-shadow: 0 0 3px rgba(0, 255, 0, 0.3);
+    }
+    
+    ul {
+        margin: 1rem 0 1rem 2rem;
+        color: #00dd00;
+    }
+    
+    li {
+        margin-bottom: 0.5rem;
+        position: relative;
+    }
+    
+    li::marker {
+        color: #00ff00;
+        text-shadow: 0 0 5px #00ff00;
+    }
+    
+    .component-box {
+        background-color: #001a00;
+        border: 2px solid #00ff00;
+        padding: 1rem;
+        margin: 1rem 0;
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+    }
+    
+    .component-box h4 {
+        color: #00ff00;
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+        text-shadow: 0 0 5px #00ff00;
+    }
+    
+    .specs {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin: 1rem 0;
+    }
+    
+    .spec-item {
+        background-color: #001a00;
+        border: 1px solid #00ff00;
+        padding: 0.8rem;
+        box-shadow: 0 0 5px rgba(0, 255, 0, 0.2);
+    }
+    
+    .spec-label {
+        color: #00aa00;
+        font-size: 0.9rem;
+        margin-bottom: 0.3rem;
+    }
+    
+    .spec-value {
+        color: #00ff00;
+        font-weight: bold;
+        text-shadow: 0 0 3px #00ff00;
+    }
+    
+    .link-box {
+        background-color: #002200;
+        border: 2px solid #00ff00;
+        padding: 1.5rem;
+        margin: 2rem 0;
+        text-align: center;
+        box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+    }
+    
+    .link-box h3 {
+        margin-top: 0;
+    }
+    
+    a {
+        color: #00ff00;
+        text-decoration: none;
+        text-shadow: 0 0 5px #00ff00;
+        transition: all 0.3s ease;
+    }
+    
+    a:hover {
+        color: #00ffff;
+        text-shadow: 0 0 10px #00ffff;
+    }
+    
+    .back-link {
+        display: inline-block;
+        margin-top: 2rem;
+        padding: 0.5rem 1rem;
+        border: 2px solid #00ff00;
+        background-color: #001a00;
+        color: #00ff00;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+    }
+    
+    .back-link:hover {
+        background-color: #00ff00;
+        color: #000;
+        box-shadow: 0 0 20px rgba(0, 255, 0, 0.6);
+    }
+    
+    .timeline {
+        color: #00aa00;
+        font-style: italic;
+        margin: 1rem 0;
+        padding: 0.5rem;
+        border-left: 3px solid #00ff00;
+        padding-left: 1rem;
+        background-color: rgba(0, 255, 0, 0.05);
+    }
+    
+    code {
+        background-color: #001a00;
+        color: #00ff00;
+        padding: 0.2rem 0.4rem;
+        border: 1px solid #00ff00;
+        font-family: 'Courier New', monospace;
+    }
+    
+    @media (max-width: 768px) {
+        .container {
+            padding: 1rem;
+        }
+        
+        h1 {
+            font-size: 1.5rem;
+        }
+        
+        .specs {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+</head>
+<body>
+<div id="packet-background"></div>
+<div class="container">
+    <div class="frequency-display">
+        <span class="frequency-text">[ 868.0 MHz ] [ SF7-SF12 ] [ SCANNING ]</span>
+    </div>
+    
+    <h1>LoRaAP</h1>
+    <div class="subtitle">Low-Level LoRa Protocol Analyzer</div>
+    <span class="status-badge">🔧 LEGACY PROJECT - PLANNED REFACTOR</span>
+    
+    <div class="timeline">
+        📅 Project Timeline: ~2017-2018 (7+ years ago) | Status: Archived, pending modernization
+    </div>
+    
+    <h2>📡 Project Overview</h2>
+    <p>
+        LoRaAP was designed as a portable, low-level LoRa protocol analyzer that could capture, 
+        decode, and visualize LoRa radio transmissions in real-time. The project combined custom 
+        hardware (RFM95 radio module + ESP8266) with an Android smartphone interface to create 
+        a field-deployable tool for LoRa network analysis and debugging.
+    </p>
+    
+    <h2>🔧 Hardware Architecture</h2>
+    
+    <div class="component-box">
+        <h4>Core Components</h4>
+        <ul>
+            <li><strong>RFM95 LoRa Module</strong> - Semtech SX1276/77/78/79 based transceiver breakout board</li>
+            <li><strong>ESP8266 WiFi Module</strong> - Microcontroller handling radio control and data processing</li>
+            <li><strong>USB OTG Interface</strong> - Direct connection to Android smartphone</li>
+            <li><strong>Custom PCB</strong> - Breakout board integrating all components</li>
+        </ul>
+    </div>
+    
+    <div class="specs">
+        <div class="spec-item">
+            <div class="spec-label">Frequency Range</div>
+            <div class="spec-value">868 MHz / 915 MHz</div>
+        </div>
+        <div class="spec-item">
+            <div class="spec-label">Spreading Factor</div>
+            <div class="spec-value">SF7 - SF12</div>
+        </div>
+        <div class="spec-item">
+            <div class="spec-label">Interface</div>
+            <div class="spec-value">USB OTG Serial</div>
+        </div>
+        <div class="spec-item">
+            <div class="spec-label">Power Supply</div>
+            <div class="spec-value">USB 5V</div>
+        </div>
+    </div>
+    
+    <h2>📱 Software Features</h2>
+    
+    <h3>Android GUI Application</h3>
+    <p>
+        A custom Android application provided the user interface for:
+    </p>
+    <ul>
+        <li>Real-time packet capture and display</li>
+        <li>LoRa parameter configuration (frequency, SF, bandwidth, coding rate)</li>
+        <li>Signal strength (RSSI) monitoring</li>
+        <li>Packet logging and export</li>
+        <li>Visual spectrum display</li>
+        <li>Protocol decoding (LoRaWAN analysis)</li>
+    </ul>
+    
+    <h3>ESP8266 Firmware</h3>
+    <p>
+        The embedded firmware handled:
+    </p>
+    <ul>
+        <li>SPI communication with RFM95 module</li>
+        <li>LoRa packet reception and transmission</li>
+        <li>Serial protocol for Android communication</li>
+        <li>Parameter configuration and storage</li>
+        <li>Low-level radio diagnostics</li>
+    </ul>
+    
+    <h2>🎯 Use Cases</h2>
+    <ul>
+        <li><strong>Network Debugging</strong> - Capture and analyze LoRaWAN traffic for troubleshooting</li>
+        <li><strong>Coverage Testing</strong> - Field measurements of signal strength and packet reception</li>
+        <li><strong>Protocol Analysis</strong> - Deep inspection of LoRa physical layer parameters</li>
+        <li><strong>Education</strong> - Learning tool for understanding LoRa modulation and protocols</li>
+        <li><strong>Security Research</strong> - Analysis of LoRa network security implementations</li>
+    </ul>
+    
+    <h2>� Project Images</h2>
+    
+    <div class="component-box" style="text-align: center;">
+        <h4>LoRa Receiver Hardware</h4>
+        <p style="margin-bottom: 1rem;">RFM95 + ESP8266 breakout board with antenna</p>
+        <img src="https://github.com/ReinVelt/loraap/blob/master/Documentation/lora-receiver.jpg?raw=true" 
+             alt="LoRa Receiver" 
+             style="max-width: 100%; height: auto; border: 2px solid #00ff00; margin: 1rem 0; box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);">
+        <p style="margin-top: 1rem; font-size: 0.9rem; color: #00aa00;">
+            Complete hardware assembly with antenna and USB connection
+        </p>
+    </div>
+    
+    <div class="component-box" style="text-align: center; margin-top: 2rem;">
+        <h4>Hardware Detail View</h4>
+        <p style="margin-bottom: 1rem;">Board with ESP8266, RFM95 module, and antenna - source code printout visible in background</p>
+        <img src="https://github.com/ReinVelt/loraap/blob/master/Documentation/lora-receiver-detail.jpg?raw=true" 
+             alt="LoRa Receiver Detail" 
+             style="max-width: 100%; height: auto; border: 2px solid #00ff00; margin: 1rem 0; box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);">
+        <p style="margin-top: 1rem; font-size: 0.9rem; color: #00aa00;">
+            Detailed view showing ESP8266 + RFM95 integration with source code printout
+        </p>
+    </div>
+    
+    <h2>🔄 Future Development</h2>
+    
+    <div class="link-box">
+        <h3>🚀 Planned Refactor: Tanmatsu Platform</h3>
+        <p>
+            The project is planned to be modernized and ported to the <strong>Tanmatsu</strong> 
+            hardware platform, which offers improved capabilities and a more integrated design.
+        </p>
+        <p style="margin-top: 1rem;">
+            Tanmatsu is based on the ESP32-P4 SoC with a 400MHz dual-core RISC-V processor, 32MB PSRAM, 
+            and includes ESP32-C6 for WiFi/BLE, plus a built-in LoRa module (Ra-01S/Ra-01SH). 
+            It features an 800x480 MIPI DSI display, QWERTY keyboard, and extensive expansion capabilities.
+        </p>
+        <p style="margin-top: 1rem;">
+            <a href="https://docs.tanmatsu.cloud/" target="_blank" rel="noopener">
+                📚 Tanmatsu Documentation →
+            </a>
+            &nbsp;|&nbsp;
+            <a href="https://nicolaielectronics.nl/tanmatsu/" target="_blank" rel="noopener">
+                🌐 Tanmatsu Website →
+            </a>
+        </p>
+    </div>
+    
+    <h3>Planned Improvements</h3>
+    <ul>
+        <li>Modern hardware platform with better performance</li>
+        <li>Enhanced UI with improved visualization</li>
+        <li>Support for additional LoRa frequency bands</li>
+        <li>Multi-channel simultaneous monitoring</li>
+        <li>Extended protocol support (Meshtastic, TTN, etc.)</li>
+        <li>Cloud integration for remote monitoring</li>
+        <li>Battery-powered portable operation</li>
+    </ul>
+    
+    <h2>📚 Technical Background</h2>
+    
+    <h3>LoRa Technology</h3>
+    <p>
+        LoRa (Long Range) is a spread spectrum modulation technique derived from chirp spread 
+        spectrum (CSS) technology. It provides long-range communication (up to several kilometers) 
+        with low power consumption, making it ideal for IoT applications.
+    </p>
+    
+    <h3>Key Parameters</h3>
+    <ul>
+        <li><code>Spreading Factor (SF)</code> - Tradeoff between data rate and range (SF7 = fast/short, SF12 = slow/long)</li>
+        <li><code>Bandwidth (BW)</code> - Radio channel width (125 kHz, 250 kHz, 500 kHz)</li>
+        <li><code>Coding Rate (CR)</code> - Forward error correction (4/5, 4/6, 4/7, 4/8)</li>
+        <li><code>Frequency</code> - Carrier frequency (868 MHz in EU, 915 MHz in US)</li>
+    </ul>
+    
+    <h2>🛠️ Development Challenges</h2>
+    <p>
+        The project presented several interesting technical challenges:
+    </p>
+    <ul>
+        <li>Timing-critical SPI communication on resource-constrained ESP8266</li>
+        <li>Efficient packet buffering and serial communication protocol</li>
+        <li>Android USB OTG serial driver compatibility</li>
+        <li>Real-time visualization of high-speed data streams</li>
+        <li>Power management for portable operation</li>
+        <li>PCB layout for RF sensitivity</li>
+    </ul>
+    
+    <h2>💡 Lessons Learned</h2>
+    <p>
+        This project provided valuable experience in:
+    </p>
+    <ul>
+        <li>RF hardware design and PCB layout considerations</li>
+        <li>Low-level radio protocol implementation</li>
+        <li>Android native development and USB communication</li>
+        <li>Embedded systems with real-time constraints</li>
+        <li>Hardware-software co-design</li>
+        <li>Field testing and practical usability concerns</li>
+    </ul>
+    
+    <h2>🔗 Project Resources</h2>
+    
+    <div class="link-box">
+        <h3>Source Code & Documentation</h3>
+        <p style="margin: 1rem 0;">
+            The complete source code, hardware schematics, firmware, and Android app are available on GitHub:
+        </p>
+        <p>
+            <a href="https://github.com/ReinVelt/loraap" target="_blank" rel="noopener">
+                📦 GitHub Repository: ReinVelt/loraap →
+            </a>
+        </p>
+        <p style="margin-top: 1.5rem; font-size: 0.9rem; color: #00aa00;">
+            Includes: ESP8266 firmware, Android app source, PCB designs, and full documentation
+        </p>
+    </div>
+    
+    <div style="text-align: center; margin-top: 3rem; padding: 2rem; border-top: 2px solid #00ff00;">
+        <p style="color: #00aa00; font-style: italic;">
+            "Listening to the radio spectrum, one packet at a time." 📡
+        </p>
+    </div>
+    
+    <a href="../../sitemap.html" class="back-link">← Back to Main</a>
+</div>
+
+<script>
+// LoRa packet animation
+const packetBackground = document.getElementById('packet-background');
+
+const packetTypes = [
+    {
+        type: 'ttn',
+        name: 'TTN',
+        samples: [
+            'SF7BW125 868.1MHz | DevAddr:260B1234 | FCnt:0042 | Port:1 | RSSI:-85dBm | SNR:8.5dB',
+            'SF9BW125 868.3MHz | DevAddr:260B5678 | FCnt:0127 | Port:2 | RSSI:-92dBm | SNR:5.2dB',
+            'SF10BW125 868.5MHz | DevAddr:260B9ABC | FCnt:0089 | Port:1 | RSSI:-98dBm | SNR:3.1dB',
+            'SF8BW125 867.9MHz | DevAddr:260BDEF0 | FCnt:0201 | Port:3 | RSSI:-88dBm | SNR:7.3dB'
+        ]
+    },
+    {
+        type: 'meshtastic',
+        name: 'Meshtastic',
+        samples: [
+            'SF11BW125 868.0MHz | ID:!a1b2c3d4 | Hop:2 | Ch:0 | RSSI:-102dBm | SNR:1.5dB | MSG',
+            'SF12BW125 868.0MHz | ID:!e5f6a7b8 | Hop:1 | Ch:0 | RSSI:-108dBm | SNR:-2.1dB | POS',
+            'SF10BW125 868.0MHz | ID:!1c2d3e4f | Hop:3 | Ch:0 | RSSI:-96dBm | SNR:4.2dB | TELEMETRY',
+            'SF11BW125 868.0MHz | ID:!5a6b7c8d | Hop:1 | Ch:0 | RSSI:-100dBm | SNR:2.8dB | ACK'
+        ]
+    },
+    {
+        type: 'meshcore',
+        name: 'Meshcore',
+        samples: [
+            'SF9BW125 433.175MHz | Node:MC-A12F | Seq:4523 | Type:DATA | RSSI:-90dBm | SNR:6.1dB',
+            'SF7BW125 433.175MHz | Node:MC-B34E | Seq:8912 | Type:BEACON | RSSI:-82dBm | SNR:9.2dB',
+            'SF10BW125 433.175MHz | Node:MC-C56D | Seq:2341 | Type:ROUTE | RSSI:-95dBm | SNR:4.5dB',
+            'SF8BW125 433.175MHz | Node:MC-D78C | Seq:6789 | Type:CTRL | RSSI:-87dBm | SNR:7.8dB'
+        ]
+    }
+];
+
+function createPacket() {
+    const packet = document.createElement('div');
+    packet.className = 'lora-packet';
+    
+    // Random packet type
+    const typeData = packetTypes[Math.floor(Math.random() * packetTypes.length)];
+    const sample = typeData.samples[Math.floor(Math.random() * typeData.samples.length)];
+    
+    packet.classList.add(`packet-${typeData.type}`);
+    packet.textContent = `[${typeData.name}] ${sample}`;
+    
+    // Random horizontal position
+    const startX = Math.random() * 80 - 40; // -40% to +40%
+    const endX = startX + (Math.random() * 40 - 20); // drift left or right
+    packet.style.setProperty('--start-x', `${startX}vw`);
+    packet.style.setProperty('--end-x', `${endX}vw`);
+    
+    // Random horizontal starting position
+    packet.style.left = `${10 + Math.random() * 80}%`;
+    
+    // Random animation delay
+    packet.style.animationDelay = `${Math.random() * 3}s`;
+    
+    packetBackground.appendChild(packet);
+    
+    // Remove packet after animation completes
+    setTimeout(() => {
+        packet.remove();
+    }, 15000);
+}
+
+// Create initial packets
+for (let i = 0; i < 5; i++) {
+    setTimeout(() => createPacket(), i * 1000);
+}
+
+// Continuously create new packets
+setInterval(() => {
+    createPacket();
+}, 3000 + Math.random() * 2000); // Every 3-5 seconds
+</script>
+</body>
+</html>
