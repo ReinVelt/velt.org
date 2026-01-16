@@ -133,17 +133,6 @@
             color: #666;
         }
         
-        .loading::after {
-            content: '...';
-            animation: dots 1.5s steps(4, end) infinite;
-        }
-        
-        @keyframes dots {
-            0%, 20% { content: '.'; }
-            40% { content: '..'; }
-            60%, 100% { content: '...'; }
-        }
-        
         footer {
             text-align: center;
             padding: 40px 20px;
@@ -177,12 +166,12 @@
 <body>
     <header>
         <h1>Theo's Mechanische Aap</h1>
-        <p>Archief 2009-2020</p>
+        <p>Archief 2009-2020 • 75 Artikelen</p>
     </header>
     
     <div class="container">
         <div class="articles-grid" id="articlesGrid"></div>
-        <div class="loading" id="loading" style="display: none;">Meer artikelen laden</div>
+        <div class="loading" id="loading" style="display: none;">Meer artikelen laden...</div>
     </div>
     
     <footer>
@@ -190,62 +179,837 @@
     </footer>
     
     <script>
-        let allArticles = [];
+        // Article data embedded directly
+        const allArticles = [
+  {
+    "href": "2020-03-09-carnaval-in-emmer-compascuum.html",
+    "title": "Carnaval in Emmer-Compascuum",
+    "date": "2020-03-09 - Theo's Mechanische Aap",
+    "excerpt": "Het afgelopen half jaar zijn we bezig geweest met de voorbereidingen voor het Carnaval in Emmer-Compascuum en in het bijzonder de carnavalswagen van het Oosterdaip. De wagens bevatten honderden meters",
+    "image": "images/20200221_190405_142dbabc.jpg",
+    "images": 4,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2020-03-09"
+  },
+  {
+    "href": "2019-12-30-theo-verhuisd-naar-drenthe.html",
+    "title": "Theo verhuisd naar Drenthe",
+    "date": "2019-12-30 - Theo's Mechanische Aap",
+    "excerpt": "is verhuisd naar Emmer-Compascuum. De werkplaats in den Haag is er nog wel maar is erg rustig. Wil je van de werkplaats in Den Haag gebruik maken? OF heb je zin om langs te komen in Emmer-Compascuum? ",
+    "image": "images/heinez_42728d55.JPG",
+    "images": 1,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2019-12-30"
+  },
+  {
+    "href": "2019-07-29-lora-gateway-operationeel-in-emmer-compascuum.html",
+    "title": "Lora gateway operationeel in Emmer-Compascuum",
+    "date": "2019-07-29 - Theo's Mechanische Aap",
+    "excerpt": "Vanaf aankomend weekend is de Lora gateway bij de vestiging van Theo's Mechanische Aap in Emmer-Compascuum operationeel. Het gaat hier om een multichannel gateway van het type Lorank8. De gateway werk",
+    "image": "",
+    "images": 0,
+    "links": 1,
+    "attachments": 0,
+    "sortDate": "2019-07-29"
+  },
+  {
+    "href": "2018-12-15-weerstation-project.html",
+    "title": "Weerstation project",
+    "date": "2018-12-15 - Theo's Mechanische Aap",
+    "excerpt": "De afgelopen dagen hebben Louis, Marco en Rein een plannetje bedacht om een weerstation te maken. Het apparaat zou minimaal de volgende specs moeten krijgen:",
+    "image": "images/processor-behuizing_a089a3fe.jpeg",
+    "images": 8,
+    "links": 1,
+    "attachments": 0,
+    "sortDate": "2018-12-15"
+  },
+  {
+    "href": "2018-05-15-vliegerfotos-rhenen-bij-de-rijn.html",
+    "title": "Vliegerfotos Rhenen bij de Rijn",
+    "date": "2018-05-15 - Theo's Mechanische Aap",
+    "excerpt": "Vliegerfoto's gemaakt bij de  oude Rijn bij Rhenen met een nieuwe picavet en nieuwe software om de camera aan te sturen. De foto's lijken een stuk scherper dan eerder het geval was",
+    "image": "images/DSC03764_159279de.JPG",
+    "images": 6,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2018-05-15"
+  },
+  {
+    "href": "2018-02-03-aapklok-10.html",
+    "title": "Aapklok 1.0",
+    "date": "2018-02-03 - Theo's Mechanische Aap",
+    "excerpt": "De klok bestaat uit de volgende onderdelen:",
+    "image": "images/27503193_1400418506752330_6877499074445670281_o_3c072a2b.jpg",
+    "images": 6,
+    "links": 1,
+    "attachments": 0,
+    "sortDate": "2018-02-03"
+  },
+  {
+    "href": "2017-08-06-sha2017.html",
+    "title": "SHA2017",
+    "date": "2017-08-06 - Theo's Mechanische Aap",
+    "excerpt": "Theo's Mechanische Aap is ook aanwezig op SHA2017. We staan op het lovelace veld en zullen daar onder andere het principe van Kap (kite aerial photography) laten zien en er zijn wat experimenten met L",
+    "image": "images/600px-Sticker_SHA_freespeechflag_f6c23e65.jpg",
+    "images": 1,
+    "links": 1,
+    "attachments": 0,
+    "sortDate": "2017-08-06"
+  },
+  {
+    "href": "2017-01-14-draadloze-temperatuur-en-luchtvochtigheid-sensor.html",
+    "title": "Draadloze temperatuur en luchtvochtigheid sensor",
+    "date": "2017-01-14 - Theo's Mechanische Aap",
+    "excerpt": "Een Esp8266 microcontroller en en dht22 sensor. Deze kun je voor een paar euro krijgen op AliExpress",
+    "image": "images/NodeMCU_v0.9_Pinout_aab1ff9c.png",
+    "images": 3,
+    "links": 6,
+    "attachments": 1,
+    "sortDate": "2017-01-14"
+  },
+  {
+    "href": "2016-05-27-vliegerfotos-vuurtoren-texel.html",
+    "title": "Vliegerfoto's vuurtoren Texel",
+    "date": "2016-05-27 - Theo's Mechanische Aap",
+    "excerpt": "2 weken geleden zijn we op Texel geweest om te kamperen en uiteraard ook weer vliegerfoto's te maken met de nieuwe Sony HDR-AS20 camera. Het weer was niet heel erg mooi, bewolkt en windkracht 6, maar ",
+    "image": "images/SDSC00056_d5f6837c.JPG",
+    "images": 7,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2016-05-27"
+  },
+  {
+    "href": "2015-12-28-lora-gateway-operationeel.html",
+    "title": "Lora gateway operationeel",
+    "date": "2015-12-28 - Theo's Mechanische Aap",
+    "excerpt": "SInds vorige week is de Mechanische aap Lora gateway operationeel. De gateway staat op de Alexander Gogelweg 10/12 in Den Haag en is beschikbaar om pakketjes op diverse lora netwerken af te leveren.Je",
+    "image": "images/LoRa_97b02911.jpg",
+    "images": 2,
+    "links": 1,
+    "attachments": 0,
+    "sortDate": "2015-12-28"
+  },
+  {
+    "href": "2015-04-30-koffie-bonen-branden.html",
+    "title": "Koffie bonen branden",
+    "date": "2015-04-30 - Theo's Mechanische Aap",
+    "excerpt": "Brand log20-4-2015 Eerste poging met een klein steelpannetje op de BBQ. Duurde lang (>15 minuten) tot eerste crack. Lekker pittige smaak (Aeropress)26-4-2015 Tweede poging met een pannetje op de Kelly",
+    "image": "images/IMG-20150421-WA0000_2beb6eef.jpeg",
+    "images": 3,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2015-04-30"
+  },
+  {
+    "href": "2015-04-28-corexy-hbot-cns-frees.html",
+    "title": "CoreXY / HBot CNS Frees",
+    "date": "2015-04-28 - Theo's Mechanische Aap",
+    "excerpt": "Hieronder een aantal foto's van onze nieuwe CNC frees in aanbouw. Het hardware ontwerp is gebaseerd op CoreXY / HBot en de firmware maakt gebruik van Marlin-firmware welke  erg populair is als firmwar",
+    "image": "images/IMG-20150418-WA0007_cd4c6a22.jpg",
+    "images": 8,
+    "links": 1,
+    "attachments": 0,
+    "sortDate": "2015-04-28"
+  },
+  {
+    "href": "2015-04-28-delft-opent-laadstraat-voor-opladen-van-elektrisch.html",
+    "title": "Delft opent 'laadstraat' voor opladen van elektrische auto's",
+    "date": "2015-04-28 - Theo's Mechanische Aap",
+    "excerpt": "DELFT - De gemeente Delft wil het rijden in elektrische voertuigen aantrekkelijker maken. Daarom is donderdag de eerste 'laadstraat' geopend. Bij de Beta Factory van de Haagse Hogeschool aan de Abtswo",
+    "image": "images/2832523_bf96aa52.jpg",
+    "images": 1,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2015-04-28"
+  },
+  {
+    "href": "2015-01-19-kinotracker.html",
+    "title": "Kinotracker",
+    "date": "2015-01-19 - Theo's Mechanische Aap",
+    "excerpt": "De Kinotracker is een remote GPS tracker die via een draadloze verbindinging locatie informatie doorgeeft aan een Android- ontvanger. De Kinotracker heeft geen Simkaart of GSM verbinding nodig om loca",
+    "image": "images/P1020917_43b1da97.JPG",
+    "images": 2,
+    "links": 4,
+    "attachments": 2,
+    "sortDate": "2015-01-19"
+  },
+  {
+    "href": "2015-01-01-geschiedenis-van-het-vliegeren.html",
+    "title": "Geschiedenis van het vliegeren",
+    "date": "2015-01-01 - Theo's Mechanische Aap",
+    "excerpt": "De eerste officiële vlieger duikt op rond 400 voor Christus in China, maar er zijn aanwijzingen dat daar reeds 600 jaar eerder de vlieger is uitgevonden. Dit heeft alles te maken met het feit dat in C",
+    "image": "",
+    "images": 0,
+    "links": 10,
+    "attachments": 0,
+    "sortDate": "2015-01-01"
+  },
+  {
+    "href": "2015-01-01-geschiedenis-van-villa-grijpsheert.html",
+    "title": "Geschiedenis van Villa Grijpsheert",
+    "date": "2015-01-01 - Theo's Mechanische Aap",
+    "excerpt": "Architect Eduard Gerard Hendrik Hubert Cuypers (1859-1927) Cuypers is verantwoordelijk voor het ontwerp van villa Grijpsheert aan Alexander Gogelweg 12. Hij kreeg in 1906  de opdracht van W.E. de Waar",
+    "image": "",
+    "images": 0,
+    "links": 3,
+    "attachments": 0,
+    "sortDate": "2015-01-01"
+  },
+  {
+    "href": "2015-01-01-arduino-workshop.html",
+    "title": "Arduino workshop",
+    "date": "2015-01-01 - Theo's Mechanische Aap",
+    "excerpt": "Informatie voor tijdens de Arduino workshop",
+    "image": "",
+    "images": 0,
+    "links": 1,
+    "attachments": 2,
+    "sortDate": "2015-01-01"
+  },
+  {
+    "href": "2015-01-01-robots-on-video.html",
+    "title": "Robots on Video....",
+    "date": "2015-01-01 - Theo's Mechanische Aap",
+    "excerpt": "In this category one will meet with the artists imagination: clip with robots in it, for inspiration or just for fun....",
+    "image": "",
+    "images": 0,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2015-01-01"
+  },
+  {
+    "href": "2015-01-01-from-photos-to-a-3d-model.html",
+    "title": "From photos to a 3d model",
+    "date": "2015-01-01 - Theo's Mechanische Aap",
+    "excerpt": "Create a 3d modelThere are different ways how you can turn the photos into a 3d model. Personally I like autodesk’ recap the best.",
+    "image": "",
+    "images": 0,
+    "links": 7,
+    "attachments": 0,
+    "sortDate": "2015-01-01"
+  },
+  {
+    "href": "2015-01-01-sensoren.html",
+    "title": "Sensoren",
+    "date": "2015-01-01 - Theo's Mechanische Aap",
+    "excerpt": "Een sensor is een apparaat waarmee je dingen kan meten. Voor vrijwel alle zaken die je kunt meten bestaat er wel een sensor. Temperatuur, afstand, tijd, kleur, vorm, etc.... Bij het kiezen van een sen",
+    "image": "",
+    "images": 0,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2015-01-01"
+  },
+  {
+    "href": "2015-01-01-infrarood-afstand-sensor.html",
+    "title": "Infrarood afstand sensor",
+    "date": "2015-01-01 - Theo's Mechanische Aap",
+    "excerpt": "Infraroodofinfrarode straling, voor het oog niet waarneembareelektromagnetische straling, metgolflengtentussen circa 780nanometeren 1mm(106nm), dus tussen het (zichtbare) rode licht en demicrogolven. ",
+    "image": "",
+    "images": 0,
+    "links": 5,
+    "attachments": 0,
+    "sortDate": "2015-01-01"
+  },
+  {
+    "href": "2015-01-01-wavefront-algoritme.html",
+    "title": "Wavefront algoritme",
+    "date": "2015-01-01 - Theo's Mechanische Aap",
+    "excerpt": "Dit artikel is vertaald vanhttp://www.societyofrobots.com/programming_wavefront.shtml",
+    "image": "",
+    "images": 0,
+    "links": 1,
+    "attachments": 0,
+    "sortDate": "2015-01-01"
+  },
+  {
+    "href": "2015-01-01-microcontrollers.html",
+    "title": "Microcontrollers",
+    "date": "2015-01-01 - Theo's Mechanische Aap",
+    "excerpt": "Uit Wikipedia, de vrije encyclopedie",
+    "image": "",
+    "images": 0,
+    "links": 6,
+    "attachments": 0,
+    "sortDate": "2015-01-01"
+  },
+  {
+    "href": "2015-01-01-arduino.html",
+    "title": "Arduino",
+    "date": "2015-01-01 - Theo's Mechanische Aap",
+    "excerpt": "Arduinois eenopensourcecomputerplatformdat is opgebouwd rond deATmega168microcontrollervan Atmel en het softwareontwikkelplatformProcessing. Dit platform is bedoeld voor hobbyisten, artiesten, kunsten",
+    "image": "",
+    "images": 0,
+    "links": 8,
+    "attachments": 0,
+    "sortDate": "2015-01-01"
+  },
+  {
+    "href": "2015-01-01-sonar.html",
+    "title": "Sonar",
+    "date": "2015-01-01 - Theo's Mechanische Aap",
+    "excerpt": "Sonar(soundnavigation andranging) is een techniek diegeluidgebruikt om onder water tenavigerenof om andere voorwerpen te detecteren. Er wordt een onderscheid gemaakt tussen actieve en passieve sonar.",
+    "image": "",
+    "images": 0,
+    "links": 2,
+    "attachments": 0,
+    "sortDate": "2015-01-01"
+  },
+  {
+    "href": "2014-11-10-tankbot.html",
+    "title": "Tankbot",
+    "date": "2014-11-10 - Theo's Mechanische Aap",
+    "excerpt": "Hieronder een aantal foto's van onze nieuwe robot tank in aanbouw. De tank wordt aangedreven door twee ruitenwissermotoren. Verder zijn alle onderdelen zelf gemaakt, inclusief de rupsband.",
+    "image": "images/IMG_20141108_220510_1c918164.jpg",
+    "images": 8,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2014-11-10"
+  },
+  {
+    "href": "2014-07-15-diy-betaalautomaat.html",
+    "title": "DIY Betaalautomaat",
+    "date": "2014-07-15 - Theo's Mechanische Aap",
+    "excerpt": "Het prototype van onze nieuwe zelfgebouwde betaalautomaat is bijna klaar. De automaat wordt aangestuurd door een Arduino microcontroller en heeft een 12Volt en een USB-aansluiting.",
+    "image": "images/IMG-20140715-WA0007_c131f887.jpg",
+    "images": 3,
+    "links": 0,
+    "attachments": 2,
+    "sortDate": "2014-07-15"
+  },
+  {
+    "href": "2014-05-30-soldeer-en-vliegerworkshop-voor-kinderen-groot-suc.html",
+    "title": "Soldeer en vliegerworkshop voor kinderen groot succes",
+    "date": "2014-05-30 - Theo's Mechanische Aap",
+    "excerpt": "Afgelopen zondag hebben we een workshop voor kinderen (en ouders) georganiseerd. 's-Morgens solderen en strandbeesten bouwen. 's-Middags vliegeren mèt en zonder camera. Dit evenement was zeker voor he",
+    "image": "images/P1020291_36dcab47.JPG",
+    "images": 8,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2014-05-30"
+  },
+  {
+    "href": "2013-12-05-panorama-picavet.html",
+    "title": "Panorama picavet",
+    "date": "2013-12-05 - Theo's Mechanische Aap",
+    "excerpt": "We hebben het ontwerp van de vorige panorama picavet verbeterd. De nieuwe versie is 50 gram lichter, een stuk steviger en gebruikersvriendelijker. De draaisnelheid is in te stellen via een potmeter en",
+    "image": "images/lev-picavet2_c08bdaef.png",
+    "images": 4,
+    "links": 0,
+    "attachments": 1,
+    "sortDate": "2013-12-05"
+  },
+  {
+    "href": "2013-12-05-cursus-drupal-7.html",
+    "title": "Cursus Drupal 7",
+    "date": "2013-12-05 - Theo's Mechanische Aap",
+    "excerpt": "Vanaf 1 januari 2014 is bij de Mechanische Aap elke dinsdag vanaf 20:00 uur gereserveerd voor de Drupal cursus. Tijdens de cursus leer je wat Drupal is en hoe het precies werkt. Je leert je eigen inte",
+    "image": "images/Drupal-Graphic_a44954c0.png",
+    "images": 1,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2013-12-05"
+  },
+  {
+    "href": "2013-10-01-makerfaire-groningen-festival-voor-vindingrijkheid.html",
+    "title": "Makerfaire Groningen - Festival voor vindingrijkheid",
+    "date": "2013-10-01 - Theo's Mechanische Aap",
+    "excerpt": "De Groningen Maker Faire is hét jaarlijkse podium voor makers: uitvinders, bouwers, hackers, nerds en knutselaars laten één dag lang aan de wereld zien wat ze verzinnen, maken en ontwikkelen.De grote ",
+    "image": "images/makerfaire050_8bfdc991.png",
+    "images": 1,
+    "links": 1,
+    "attachments": 0,
+    "sortDate": "2013-10-01"
+  },
+  {
+    "href": "2013-09-16-vliegerworkshop-voor-kinderen-en-ouders.html",
+    "title": "Vliegerworkshop voor kinderen (en ouders)",
+    "date": "2013-09-16 - Theo's Mechanische Aap",
+    "excerpt": "Zaterdag 28 september en zondag 29 september zal het jaarlijkse vliegerfestival in Scheveningen plaatsvinden. De mensen van de Mechanische Aap zullen daar ook aanwezig zijn met een paar grote en een a",
+    "image": "images/Vliegerfestival-2013_0_b086ffb4.jpg",
+    "images": 1,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2013-09-16"
+  },
+  {
+    "href": "2013-07-23-solar-oven.html",
+    "title": "Solar oven",
+    "date": "2013-07-23 - Theo's Mechanische Aap",
+    "excerpt": "Tijdens de vakantie een prototype van een solar oven gemaakt.",
+    "image": "images/L1120377_b8be8f34.JPG",
+    "images": 8,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2013-07-23"
+  },
+  {
+    "href": "2013-07-23-automatische-panorama-gimbal-voor-fotovliegeren.html",
+    "title": "Automatische panorama gimbal voor fotovliegeren",
+    "date": "2013-07-23 - Theo's Mechanische Aap",
+    "excerpt": "Omdat we niet elke keer onze vliegercamera naar beneden willen halen om de camera richting te veranderen hebben we een oplossing bedacht.Deze bestaat uit 2 servo's een Arduino, een 5Volt battery en wa",
+    "image": "images/simplepantiltkap_6f853efd.jpg",
+    "images": 8,
+    "links": 1,
+    "attachments": 0,
+    "sortDate": "2013-07-23"
+  },
+  {
+    "href": "2013-05-26-liquid-image-ego-picavet-stabilisator.html",
+    "title": "Liquid Image Ego  picavet  stabilisator",
+    "date": "2013-05-26 - Theo's Mechanische Aap",
+    "excerpt": "De Liquid Image Ego is een mini HD camera. De camera is door middel van een smartphone en een wifi verbinding te besturen en is daarom uitermate geschikt als camera om onder aan een één-lijns vlieger ",
+    "image": "images/Picavet_81144ec3.gif",
+    "images": 8,
+    "links": 2,
+    "attachments": 0,
+    "sortDate": "2013-05-26"
+  },
+  {
+    "href": "2013-04-02-vliegerfotos-lemmer.html",
+    "title": "Vliegerfoto's Lemmer",
+    "date": "2013-04-02 - Theo's Mechanische Aap",
+    "excerpt": "Vliegerfoto vanaf bungalowpark Aquaronde in Lemmer. Tijdens het vliegeren kwam er opeens een valwind waardoor de camera en vlieger zijn gecrashed. De camera is hierbij op het ijs gevallen. Gelukkig la",
+    "image": "images/FCHD0425_d431ebe3.JPG",
+    "images": 8,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2013-04-02"
+  },
+  {
+    "href": "2013-03-12-frauangelico-microgranny-workshop-in-den-haag.html",
+    "title": "frauAngelico / microGranny workshop in Den Haag",
+    "date": "2013-03-12 - Theo's Mechanische Aap",
+    "excerpt": "30 maart organiseert Luxus een Standuino workshop in de Luxus villa in Den Haag. (http://www.standuino.eu/) Onder leiding van de ontwerpers Václav Peloušek en Ondřej Merta uit Tsjechie kan je een:http",
+    "image": "images/samplerProto2Web_76e508f3.jpg",
+    "images": 1,
+    "links": 5,
+    "attachments": 0,
+    "sortDate": "2013-03-12"
+  },
+  {
+    "href": "2013-03-08-gewijzigde-opening.html",
+    "title": "Gewijzigde opening",
+    "date": "2013-03-08 - Theo's Mechanische Aap",
+    "excerpt": "Vanaf heden is deMechanische Aapalleen geopend voor leden ofop afspraak. Dit is omdat het op doordeweekse avonden te druk was met mensen die alleen kwamen om te kijken en niet om te maken (de zogenoem",
+    "image": "images/Maker-Space-91_e3ddc4f8.png",
+    "images": 1,
+    "links": 3,
+    "attachments": 0,
+    "sortDate": "2013-03-08"
+  },
+  {
+    "href": "2013-02-01-nationale-poeziedag-en-presentatie-poëziefoon.html",
+    "title": "Nationale poeziedag  en  presentatie poëziefoon",
+    "date": "2013-02-01 - Theo's Mechanische Aap",
+    "excerpt": "Gisteren, tijdens nationale poëziedag is de poëziefoon gepresenteerd in het haagse Diamanttheater. 's Avonds hebben we veel mooie gedichten gehoord en we hebben vernomen dat er zelfs een wachtlijst is",
+    "image": "images/482123_281432685317590_1507631292_n_e6a73d7d.jpg",
+    "images": 3,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2013-02-01"
+  },
+  {
+    "href": "2013-01-29-nationale-gedichtendag-2013.html",
+    "title": "Nationale Gedichtendag 2013",
+    "date": "2013-01-29 - Theo's Mechanische Aap",
+    "excerpt": "In navolging van het geslaagde Wijkenfestival Nationale Gedichtendag 2012 presenteren Huis van Gedichten en het Diamant Theater donderdag 31 januari wederom een poëzie-evenement.",
+    "image": "images/mariahoevepoezie_c0d50194.jpg",
+    "images": 1,
+    "links": 0,
+    "attachments": 1,
+    "sortDate": "2013-01-29"
+  },
+  {
+    "href": "2013-01-14-planning-2013.html",
+    "title": "Planning 2013",
+    "date": "2013-01-14 - Theo's Mechanische Aap",
+    "excerpt": "2012 is voor Theo's Mechanische Aap een goed jaar geweest. We hebben een aantal projecten succesvol kunnen afronden en we hebben meegewerkt aan een paar leuke evenementen zoals de Makerfare in Groning",
+    "image": "images/new_year_wallpaper_2013-9_2650d90a.jpg",
+    "images": 1,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2013-01-14"
+  },
+  {
+    "href": "2012-11-11-bluebot.html",
+    "title": "Bluebot",
+    "date": "2012-11-11 - Theo's Mechanische Aap",
+    "excerpt": "Hieronder een filmpje van een oude mechanische aap robot in een nieuw jasje. De sonarsensoren zijn vervangen door een sharp sensor waardoor de robot beter reageert op stoelpoten en dergelijke. Nu moet",
+    "image": "images/2012-11-11_22.29.18_1e3d450b.jpg",
+    "images": 4,
+    "links": 1,
+    "attachments": 1,
+    "sortDate": "2012-11-11"
+  },
+  {
+    "href": "2012-11-06-robot-museo-de-la-ciencia-de-valladolid.html",
+    "title": "Robot - museo de la ciencia de Valladolid",
+    "date": "2012-11-06 - Theo's Mechanische Aap",
+    "excerpt": "In de kelder van het wetenschapsmuseum in Valladolid (Spanje) word je begroet door een robot.  Tamelijk simpele robot, hij beweegt zich (autonoom) voort op wieltjes en heeft verscheidene sensoren om b",
+    "image": "images/robot_valladolid_42c0e96f.jpg",
+    "images": 1,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2012-11-06"
+  },
+  {
+    "href": "2012-11-06-parque-de-las-ciencias-de-granada-science-museum-i.html",
+    "title": "Parque de las Ciencias de Granada - Science Museum in Granada",
+    "date": "2012-11-06 - Theo's Mechanische Aap",
+    "excerpt": "Interessant museum in Granada, Spanje. Permanente expositities over het menselijke lichaam, biosfeer, perceptie etc. Indrukwekkend was het planetarium, 110 projectoren creëren 360 graden beeld. Er zij",
+    "image": "images/robot_granada_e93893a3.jpg",
+    "images": 1,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2012-11-06"
+  },
+  {
+    "href": "2012-11-06-twizy-electrische-auto.html",
+    "title": "Twizy - electrische auto",
+    "date": "2012-11-06 - Theo's Mechanische Aap",
+    "excerpt": "Ik was onlangs in Valladolid in het noorden van Spanje. Ik bezocht daar het \"museo de la ciencia de Valladolid\" en zag enkele interessante dingen. Zeer interessant was een expositie over de geschieden",
+    "image": "images/Twizzy_b4490fd2.jpg",
+    "images": 1,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2012-11-06"
+  },
+  {
+    "href": "2012-10-12-nieuwe-ultimaker-3d-printer-in-villafablab.html",
+    "title": "Nieuwe Ultimaker 3d printer in VillaFabLab",
+    "date": "2012-10-12 - Theo's Mechanische Aap",
+    "excerpt": "Sinds kort staat er in de Villa een 3D printer die  gebruikt kan worden om 3d dingetjes te printen.",
+    "image": "images/110906_Ultimaker_photo50_1_67151ce4.jpg",
+    "images": 1,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2012-10-12"
+  },
+  {
+    "href": "2012-10-04-apebot-de-arduinorobot.html",
+    "title": "Apebot, de Arduinorobot",
+    "date": "2012-10-04 - Theo's Mechanische Aap",
+    "excerpt": "De komende twee weken is Rein bezig met het afbouwen van de nieuwste robot: de Apebot. Dit is een Arduino gebaseerde robot die een stuk uitgebreider is dan onze vorige robots. Een aantal van de featur",
+    "image": "images/2012-08-31_17.30.09_05855560.jpg",
+    "images": 1,
+    "links": 2,
+    "attachments": 0,
+    "sortDate": "2012-10-04"
+  },
+  {
+    "href": "2012-08-06-mars-rover-curiosity.html",
+    "title": "Mars Rover - Curiosity",
+    "date": "2012-08-06 - Theo's Mechanische Aap",
+    "excerpt": "Niet alleen bij Theo's Mechanische Aap wordt er aan robots gewerkt. BIj de NASA kunnen ze er ook wat van! Afgelopen maand, in de week van 9-13 juli was ik in Pasadena California. Ik bezocht daar JPL (",
+    "image": "images/IMG_2889__1__1d2435d6.jpeg",
+    "images": 1,
+    "links": 1,
+    "attachments": 0,
+    "sortDate": "2012-08-06"
+  },
+  {
+    "href": "2012-07-15-vliegerfotos-zandmotor-ter-heijde.html",
+    "title": "Vliegerfoto's  Zandmotor Ter Heijde",
+    "date": "2012-07-15 - Theo's Mechanische Aap",
+    "excerpt": "Vandaag zijn we wezen vliegeren bij de zandmotor bij Ter Heijde (onder Den Haag). We hebben onze nieuwe picavets ook meteen meegenomen om te testen. Het resultaat? Een serie mooie foto's.",
+    "image": "images/FCHD0205_0_d07b8992.JPG",
+    "images": 8,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2012-07-15"
+  },
+  {
+    "href": "2012-06-24-make-kite-aerial-photography-docu.html",
+    "title": "Make: Kite Aerial Photography docu",
+    "date": "2012-06-24 - Theo's Mechanische Aap",
+    "excerpt": "Een video van Make: over Kite Aerial Photography oftewel vliegerfotografie. Deze film laat zien wat het is en hoe het werkt. Get your rigs and lift that kite!",
+    "image": "images/San_Francisco_in_ruins_from_Lawrence_Captive_Airship__1906_e70ad68f.jpg",
+    "images": 1,
+    "links": 1,
+    "attachments": 0,
+    "sortDate": "2012-06-24"
+  },
+  {
+    "href": "2012-03-07-nieuwe-workshops-in-2012-drupal-en-vliegerfotograf.html",
+    "title": "Nieuwe workshops in 2012:  Drupal en Vliegerfotografie",
+    "date": "2012-03-07 - Theo's Mechanische Aap",
+    "excerpt": "Voor dit voorjaar (2012)  staan er bij de Mechanic Ape twee workshops geplant.",
+    "image": "images/rokkaku_8073b84b.jpg",
+    "images": 1,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2012-03-07"
+  },
+  {
+    "href": "2011-10-13-mechanic-ape-robot-presentatie.html",
+    "title": "Mechanic Ape robot presentatie",
+    "date": "2011-10-13 - Theo's Mechanische Aap",
+    "excerpt": "RIJSWIJK (ZH) -  Op 17 november 2011 19.00 zal Theo's Mechanische Aap een presentatie geven in het Competa conference center. De presentatie gaat over het bouwen van robots. Aan de hand van het ontwer",
+    "image": "images/presentation_fc61fc4a.jpg",
+    "images": 1,
+    "links": 0,
+    "attachments": 1,
+    "sortDate": "2011-10-13"
+  },
+  {
+    "href": "2011-07-28-tmabot-3-ontwerp-modulaire-motoraansturing.html",
+    "title": "TMAbot 3 - ontwerp modulaire motoraansturing",
+    "date": "2011-07-28 - Theo's Mechanische Aap",
+    "excerpt": "De TMABot3 komt er binnenkort aan. Deze robot is gebaseerd op het ontwerp van onze vorige robots waarbij we een aantal grote verbeteringen hebben aangebracht.",
+    "image": "images/DSC02232_993b6d67.JPG",
+    "images": 2,
+    "links": 0,
+    "attachments": 1,
+    "sortDate": "2011-07-28"
+  },
+  {
+    "href": "2011-06-04-vliegerfotos-scheveningen-haven.html",
+    "title": "Vliegerfoto's Scheveningen haven",
+    "date": "2011-06-04 - Theo's Mechanische Aap",
+    "excerpt": "Vliegerfoto's genomen met een FlyCamOne HD en een deltavlieger (2m x 1,5m) op een hoogte van 500 meter boven het strand van Scheveningen ter hoogte van de haven.",
+    "image": "images/FCHD0423_8112a961.JPG",
+    "images": 5,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2011-06-04"
+  },
+  {
+    "href": "2011-06-02-flycamone-hd-vlieger-constructie.html",
+    "title": "FlyCamOne HD vlieger constructie",
+    "date": "2011-06-02 - Theo's Mechanische Aap",
+    "excerpt": "Hieronder zie een paar foto's van mijn zelfgemaakt FlyCamOne HD 720P line-mount. Deze cam-houder werkt zeer goed bij weinig wind (windkracht 2-3) en heeft als voordeel dat je hem eenvoudig aan de vlie",
+    "image": "images/DSC02217_d027c3e8.JPG",
+    "images": 2,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2011-06-02"
+  },
+  {
+    "href": "2011-05-10-ich-komme.html",
+    "title": "Ich komme.....",
+    "date": "2011-05-10 - Theo's Mechanische Aap",
+    "excerpt": "Ik kom nu echt Rein, ik zit zwaar omhoog met gebrek aan computing power, kan geeneens video editen... Ik heb momenteel een projekt: De Waan van de Dag\" op uitnodiging van Stichting Maldoror...artvlogo",
+    "image": "images/balloon-tank_cf687d90.jpg",
+    "images": 1,
+    "links": 2,
+    "attachments": 0,
+    "sortDate": "2011-05-10"
+  },
+  {
+    "href": "2011-05-08-vliegerfotos-paleis-het-loo-apeldoorn.html",
+    "title": "Vliegerfoto's paleis het Loo Apeldoorn",
+    "date": "2011-05-08 - Theo's Mechanische Aap",
+    "excerpt": "Foto's genomen op zaterdag 7 mei 2011 vanaf de weide tegenover de marechausseekazerne in Apeldoorn. De wind kwam niet helemaal uit de goede hoek dus vandaar niet zo veel foto's.",
+    "image": "images/FCHD0218_a2c7ae1e.JPG",
+    "images": 4,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2011-05-08"
+  },
+  {
+    "href": "2011-04-19-vlieger-fotos-strand-westduinpark.html",
+    "title": "Vlieger foto's strand Westduinpark",
+    "date": "2011-04-19 - Theo's Mechanische Aap",
+    "excerpt": "Deze foto's zijn gemaakt  met een één-lijns vlieger en een Flycam HD camera.  De foto's zijn tot 200 meter boven het strand bij het Westduinpark in Den Haag gemaakt.",
+    "image": "images/FCHD0116_copy_be9da68e.jpg",
+    "images": 4,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2011-04-19"
+  },
+  {
+    "href": "2011-03-29-over-de-knikkers-en-de-tirefly.html",
+    "title": "Over de knikkers en de tirefly",
+    "date": "2011-03-29 - Theo's Mechanische Aap",
+    "excerpt": "Het is gelukkig lente en daarom al een stuk lichter en warmer als ik rond een een uur of acht 's avonds de sleutel in het slot friemel om toegang te krijgen tot het domein van Theo's Mechanic Ape in D",
+    "image": "images/Afbeelding_043-2_4e043f31.jpg",
+    "images": 3,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2011-03-29"
+  },
+  {
+    "href": "2011-02-27-mechanic-ape-flycamp.html",
+    "title": "Mechanic Ape Flycamp",
+    "date": "2011-02-27 - Theo's Mechanische Aap",
+    "excerpt": "Met de Pinksteren gaan we met Theo en zijn mechanische apen naar Virton in de belgische Gaume. We gaan daar naar toe om te vliegen, vliegeren en vooral om mooie beelden te maken vanuit de lucht",
+    "image": "images/2008_JLB_ZAE_Latour-9_aa8614c2.JPG",
+    "images": 1,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2011-02-27"
+  },
+  {
+    "href": "2010-11-09-veteranen-der-muzikale-improvisatie.html",
+    "title": "Veteranen der muzikale improvisatie",
+    "date": "2010-11-09 - Theo's Mechanische Aap",
+    "excerpt": "Vrijdag 12 november zullen er in Villa Grijpsheert  een aantal optredens plaatvinden. De avond begint met het optreden van een drietal muzikanten die je kunt zien als veteranen van de nderlandse impro",
+    "image": "images/fly12e_a303cc09.jpg",
+    "images": 1,
+    "links": 1,
+    "attachments": 0,
+    "sortDate": "2010-11-09"
+  },
+  {
+    "href": "2010-10-15-tmabot-2-met-wavefront-algoritme.html",
+    "title": "TMABot 2 met wavefront algoritme",
+    "date": "2010-10-15 - Theo's Mechanische Aap",
+    "excerpt": "De mechanische apen hebben de laatste dagen gewerkt aan de opvolger van TMABot v1. De nieuwe versie beschikt over een aantal algoritmes om nog beter te kunnen navigeren.",
+    "image": "images/wavefront_975f0748.jpg",
+    "images": 1,
+    "links": 1,
+    "attachments": 0,
+    "sortDate": "2010-10-15"
+  },
+  {
+    "href": "2010-09-22-tmabot-v10-released.html",
+    "title": "TMABot v1.0 released",
+    "date": "2010-09-22 - Theo's Mechanische Aap",
+    "excerpt": "We zijn nu een paar weken bezig met de ontwikkeling van een nieuwe robot. De robot kan objecten ontwijken en zelfstandig door een ruimte bewegen. De volledige bouwbeschrijving van de robot kun jehierv",
+    "image": "images/tmabot_82787272.JPG",
+    "images": 1,
+    "links": 1,
+    "attachments": 0,
+    "sortDate": "2010-09-22"
+  },
+  {
+    "href": "2010-08-31-ping-pong-tactics.html",
+    "title": "Ping Pong Tactics",
+    "date": "2010-08-31 - Theo's Mechanische Aap",
+    "excerpt": "Theo's Mechanische Aap presenteertPing Pong Tactics(indie speculooskabaal) op vrijdag 10 september 2010 om 21.00 uur. Alexander Gogelweg 12, Den Haag. Toegang 4 euro. Bier 1 euro zolang de voorraad st",
+    "image": "images/pingpong_fc5fa1d2.png",
+    "images": 1,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2010-08-31"
+  },
+  {
+    "href": "2010-08-06-software-freedom-day.html",
+    "title": "Software Freedom Day!",
+    "date": "2010-08-06 - Theo's Mechanische Aap",
+    "excerpt": "Software Freedom Day (SFD) is een wereldwijde viering van Free and Open Source Software (FOSS) oftewel Vrije en Open Bron Software. Op deze dag wil men aandacht besteden aan de voordelen van FOSS  in ",
+    "image": "images/9eb62374f2a656e50bfada5634bd26ff.media_.370x145_dfece28a.png",
+    "images": 1,
+    "links": 1,
+    "attachments": 0,
+    "sortDate": "2010-08-06"
+  },
+  {
+    "href": "2010-08-05-wat-het-feest-betreft.html",
+    "title": "Wat het feest betreft...",
+    "date": "2010-08-05 - Theo's Mechanische Aap",
+    "excerpt": "Een geweldig gaaf feest! Gezelligheid, Kunst, wij: familie en vrienden die ik lang niet gezien heb waren er. De overwegend welluidende  reacties (tot zover) op de film Movie Q. Vrienden die geholpen h",
+    "image": "images/Afbeelding_008_0_d152cdb9.jpg",
+    "images": 1,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2010-08-05"
+  },
+  {
+    "href": "2010-07-20-mechanic-ape-feest.html",
+    "title": "Mechanic Ape Feest!",
+    "date": "2010-07-20 - Theo's Mechanische Aap",
+    "excerpt": "zaterdagavond 31 juli 2010 is het feest bij de Mechanische Aap. Iedereen is welkom voor de presentatie van MovieQ, een animatiefilm door Ruud van Veen, live muziek, geluidskunstenaars, video en veel m",
+    "image": "images/FlyerTheo_s_Mech_copy_bbb48a02.jpg",
+    "images": 2,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2010-07-20"
+  },
+  {
+    "href": "2010-06-13-open-source-support-team.html",
+    "title": "Open Source support team",
+    "date": "2010-06-13 - Theo's Mechanische Aap",
+    "excerpt": "Je kunt bij Theo's Mechanische Aap terecht indien je vragen of problemen hebt met je Linux laptop. De leden van TMA gebruiken zelf Ubuntu, Debian, Archlinux e.v.a. en  hebben redelijk veel ervaring me",
+    "image": "images/Linux_4a65180e.jpg",
+    "images": 1,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2010-06-13"
+  },
+  {
+    "href": "2010-05-07-augmented-reality-experiments-part-2.html",
+    "title": "Augmented reality experiments part 2",
+    "date": "2010-05-07 - Theo's Mechanische Aap",
+    "excerpt": "We did some new experiments with augmented reality and used the cam-image as marker overlay. You can download the software with the results of our experiments. It was made withprocessingand theNyARToo",
+    "image": "images/Screenshot_1_4ffa43c7.png",
+    "images": 1,
+    "links": 2,
+    "attachments": 4,
+    "sortDate": "2010-05-07"
+  },
+  {
+    "href": "2010-04-06-ar-dev-camp.html",
+    "title": "AR Dev Camp",
+    "date": "2010-04-06 - Theo's Mechanische Aap",
+    "excerpt": "AR Dev Camp-After nearly 20 years in the research labs, Augmented Reality is taking shape as one of the next major waves of Internet innovation, overlaying and infusing the physical world with digital",
+    "image": "images/augmented-reality-system-01_361ff847.jpg",
+    "images": 1,
+    "links": 2,
+    "attachments": 0,
+    "sortDate": "2010-04-06"
+  },
+  {
+    "href": "2010-03-24-vliegklaar-maken-van-rc-uas-planes.html",
+    "title": "Vliegklaar maken van RC + UAS planes",
+    "date": "2010-03-24 - Theo's Mechanische Aap",
+    "excerpt": "De lente is begonnen en daar zijn de Mechanische Apen erg blij mee. Op tweede paasdag gaan we bij Theo onze vliegtuigen vliegklaar maken zodat we in de loop van de maand met het 'echte vliegwerk' kunn",
+    "image": "images/tmauas_fcfcf7b9.jpg",
+    "images": 1,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2010-03-24"
+  },
+  {
+    "href": "2010-03-20-super-jean-francois-plomb-in-concert-live-at-tma.html",
+    "title": "Super Jean Francois Plomb in concert live at TMA!",
+    "date": "2010-03-20 - Theo's Mechanische Aap",
+    "excerpt": "Aanstaande dinsdag 23-3-2010 is er in Villa Grijpsheert vanaf 21.00 uur een optreden van Super Jean Francois Plomb en Mathias Forge. Deze franse muziekkunstenaars maken gebruik van een aantal zeer spe",
+    "image": "http://mechanicape.com/sites/default/files/superplomb.jpg",
+    "images": 2,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2010-03-20"
+  },
+  {
+    "href": "2010-03-08-nieuwsbrief-maart-2010.html",
+    "title": "Nieuwsbrief maart 2010",
+    "date": "2010-03-08 - Theo's Mechanische Aap",
+    "excerpt": "We zijn bij Theo de winter weer goed doorgekomen en productief bezig geweest. Binnenkort wordt het weer mooi weer en dan gaat de aap natuurlijk naar buiten om te spelen met vliegtuigjes, drones en and",
+    "image": "images/lassie200_0_b91dd39a.jpg",
+    "images": 1,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2010-03-08"
+  },
+  {
+    "href": "2010-01-12-tu-eindhoven-bouwt-app-store-voor-robots.html",
+    "title": "TU Eindhoven bouwt 'app store' voor robots",
+    "date": "2010-01-12 - Theo's Mechanische Aap",
+    "excerpt": "Onderzoekers van onder meer de Technische Universiteit Eindhoven gaan een centrale database maken, die via internet informatie en kennis naar robots kan sturen.",
+    "image": "",
+    "images": 0,
+    "links": 1,
+    "attachments": 0,
+    "sortDate": "2010-01-12"
+  },
+  {
+    "href": "2009-09-08-theo-needs-more-space.html",
+    "title": "Theo needs more space",
+    "date": "2009-09-08 - Theo's Mechanische Aap",
+    "excerpt": "is op dit moment druk op zoek naar een betaalbare locatie waar we onze vereniging kunnen huisvesten. We zoeken naar een bedrijfspand/werkplaats van minimaal 100 vierkante meter maar ook een woning zou",
+    "image": "",
+    "images": 0,
+    "links": 0,
+    "attachments": 0,
+    "sortDate": "2009-09-08"
+  }
+];
+        
         let displayedArticles = 0;
         const articlesPerLoad = 12;
-        let isLoading = false;
-        
-        // Extract article metadata from HTML files
-        async function loadArticles() {
-            const response = await fetch('.');
-            const html = await response.text();
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            const links = Array.from(doc.querySelectorAll('a'))
-                .map(a => a.getAttribute('href'))
-                .filter(href => href && href.endsWith('.html') && href !== 'index.html');
-            
-            // Load each article's metadata
-            const articles = [];
-            for (const href of links) {
-                try {
-                    const articleResponse = await fetch(href);
-                    const articleHtml = await articleResponse.text();
-                    const articleDoc = parser.parseFromString(articleHtml, 'text/html');
-                    
-                    const title = articleDoc.querySelector('h1')?.textContent || 'Untitled';
-                    const date = articleDoc.querySelector('.date')?.textContent || '';
-                    const firstParagraph = articleDoc.querySelector('article p')?.textContent || '';
-                    const firstImage = articleDoc.querySelector('article img')?.src || '';
-                    const images = articleDoc.querySelectorAll('article img').length;
-                    const links = articleDoc.querySelectorAll('.links a').length;
-                    const attachments = articleDoc.querySelectorAll('.attachments a').length;
-                    
-                    // Extract date for sorting
-                    const dateMatch = href.match(/^(\d{4}-\d{2}-\d{2})/);
-                    const sortDate = dateMatch ? dateMatch[1] : '1900-01-01';
-                    
-                    articles.push({
-                        href,
-                        title,
-                        date,
-                        excerpt: firstParagraph.substring(0, 200),
-                        image: firstImage,
-                        images,
-                        links,
-                        attachments,
-                        sortDate
-                    });
-                } catch (e) {
-                    console.error(`Error loading ${href}:`, e);
-                }
-            }
-            
-            // Sort by date (newest first)
-            articles.sort((a, b) => b.sortDate.localeCompare(a.sortDate));
-            
-            return articles;
-        }
         
         function createArticleCard(article) {
             const card = document.createElement('div');
@@ -275,8 +1039,6 @@
         }
         
         function displayMoreArticles() {
-            if (isLoading) return;
-            
             const grid = document.getElementById('articlesGrid');
             const toDisplay = allArticles.slice(displayedArticles, displayedArticles + articlesPerLoad);
             
@@ -294,22 +1056,19 @@
         
         // Infinite scroll
         function checkScroll() {
+            if (displayedArticles >= allArticles.length) return;
+            
             const loading = document.getElementById('loading');
             const rect = loading.getBoundingClientRect();
             
-            if (rect.top < window.innerHeight + 200 && displayedArticles < allArticles.length) {
+            if (rect.top < window.innerHeight + 200) {
                 displayMoreArticles();
             }
         }
         
         // Initialize
-        async function init() {
+        function init() {
             document.getElementById('loading').style.display = 'block';
-            document.getElementById('loading').textContent = 'Artikelen laden';
-            
-            allArticles = await loadArticles();
-            
-            document.getElementById('loading').textContent = 'Meer artikelen laden';
             displayMoreArticles();
             
             window.addEventListener('scroll', checkScroll);
