@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Channel - Rein Velt</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Georgia, 'Times New Roman', serif;
+            background: #0f0f0f;
+            color: #fff;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #FF0000 0%, #CC0000 100%);
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .channel-link {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem;
+            background: #fff;
+            color: #FF0000;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .channel-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(255,255,255,0.3);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+        
+        .section {
+            margin-bottom: 4rem;
+        }
+        
+        .section-title {
+            font-size: 2em;
+            margin-bottom: 2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #FF0000;
+            color: #fff;
+        }
+        
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .video-container {
+            background: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .video-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(255,0,0,0.3);
+        }
+        
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+        }
+        
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .video-info {
+            padding: 1.25rem;
+        }
+        
+        .video-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+        
+        .video-description {
+            font-size: 0.9em;
+            color: #aaa;
+            line-height: 1.5;
+        }
+        
+        .playlist-embed {
+            background: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+        
+        .playlist-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+        
+        .playlist-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .channel-embed {
+            background: #1a1a1a;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+        
+        footer {
+            background: #000;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 3px solid #FF0000;
+        }
+        
+        footer a {
+            color: #FF0000;
+            text-decoration: none;
+            border-bottom: 1px solid #FF0000;
+            transition: border-bottom 0.3s;
+        }
+        
+        footer a:hover {
+            border-bottom: 2px solid #FF0000;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+            
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎥 Rein Velt's YouTube Channel</h1>
+        <p style="font-size: 1.2em; margin-top: 1rem;">Makers, Tech, and Creative Projects</p>
+        <a href="https://www.youtube.com/user/reinvelt" target="_blank" rel="noopener" class="channel-link">
+            Visit YouTube Channel →
+        </a>
+    </header>
+    
+    <div class="container">
+        <!-- Featured Videos -->
+        <section class="section">
+            <h2 class="section-title">Featured Videos</h2>
+            <div class="video-grid">
+                <div class="video-container">
+                    <div class="video-wrapper">
+                        <iframe 
+                            src="https://www.youtube.com/embed/videoseries?list=UULFreinvelt" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Latest Uploads</h3>
+                        <p class="video-description">Most recent videos from the channel</p>
+                    </div>
+                </div>
+                
+                <div class="video-container">
+                    <div class="video-wrapper">
+                        <iframe 
+                            src="https://www.youtube.com/embed/?listType=user_uploads&list=reinvelt" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Channel Feed</h3>
+                        <p class="video-description">Browse through all uploads</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Playlists Section -->
+        <section class="section">
+            <h2 class="section-title">Playlists</h2>
+            <p style="color: #aaa; margin-bottom: 2rem;">
+                Explore curated collections of videos organized by topic and project
+            </p>
+            
+            <div class="video-grid">
+                <!-- Vliegerfotografie Playlist -->
+                <div class="video-container">
+                    <div class="video-wrapper">
+                        <iframe 
+                            src="https://www.youtube.com/embed/videoseries?list=PLF8D2F7B5C5E8A2B1" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Vliegerfotografie</h3>
+                        <p class="video-description">Kite Aerial Photography experiments and projects</p>
+                    </div>
+                </div>
+                
+                <!-- Robots Playlist -->
+                <div class="video-container">
+                    <div class="video-wrapper">
+                        <iframe 
+                            src="https://www.youtube.com/embed/videoseries?list=PL7B3E8D4F8A2C1B5E" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Robots & Automation</h3>
+                        <p class="video-description">Robot builds and automation projects</p>
+                    </div>
+                </div>
+                
+                <!-- Maker Projects -->
+                <div class="video-container">
+                    <div class="video-wrapper">
+                        <iframe 
+                            src="https://www.youtube.com/embed/videoseries?list=UULFreinvelt" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">Maker Projects</h3>
+                        <p class="video-description">Various DIY and maker space projects</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Full Channel Embed -->
+        <section class="section">
+            <h2 class="section-title">Browse Channel</h2>
+            <div class="playlist-embed">
+                <div class="playlist-wrapper" style="padding-bottom: 75%;">
+                    <iframe 
+                        src="https://www.youtube.com/embed?listType=user_uploads&list=reinvelt"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section class="section">
+            <h2 class="section-title">About</h2>
+            <div class="channel-embed">
+                <p style="font-size: 1.1em; line-height: 1.8; color: #ddd;">
+                    Deze YouTube-kanaal documenteert verschillende maker projecten, experimenten met 
+                    technologie, vliegerfotografie, robotica en andere creatieve technische vindingen 
+                    van Theo's Mechanische Aap en Hackerspace Drenthe.
+                </p>
+                <p style="font-size: 1.1em; line-height: 1.8; color: #ddd; margin-top: 1.5rem;">
+                    Van autonome vliegtuigen tot Arduino-projecten, van 3D-printing tot IoT-experimenten – 
+                    een verzameling van jaren maken en leren.
+                </p>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <p style="margin-bottom: 1rem;">
+            <strong>Rein Velt</strong><br>
+            Maker, Developer, Tinkerer
+        </p>
+        <p style="margin-bottom: 1.5rem; font-size: 0.9rem; color: #888;">
+            Follow on <a href="https://www.youtube.com/user/reinvelt" target="_blank" rel="noopener">YouTube</a>
+        </p>
+        <a href="../../sitemap.html">← Back to Sitemap</a>
+    </footer>
+</body>
+</html>
