@@ -1,40 +1,9 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rein's Cyberspaceplace</title>
-    <meta name="description" content="Personal homepage, curriculum vitae, blog and hobby repository of Rein Velt - software engineer & maker. Pages are mostly in Dutch, but you can use Google Translate to overcome that issue.">
-    <meta name="author" content="Rein Velt">
-    <meta name="keywords" content="Rein Velt, software engineer, maker, DIY, electronics, programming, curriculum vitae, blog, Netherlands">
-    <meta property="og:title" content="Rein Velt - Software Engineer & Maker">
-    <meta property="og:description" content="Personal homepage, curriculum vitae, blog and hobby repository of Rein Velt - software engineer & maker.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.velt.org/">
-    <meta name="robots" content="index, follow">
-    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-    <link rel="canonical" href="https://www.velt.org/">
-    
-    <!-- Structured Data for Google -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Rein Velt",
-      "jobTitle": "Software Engineer & Maker",
-      "description": "Personal homepage, curriculum vitae, blog and hobby repository of Rein Velt - software engineer & maker. Pages are mostly in Dutch.",
-      "url": "https://www.velt.org/",
-      "sameAs": [
-        "https://github.com/ReinVelt"
-      ],
-      "knowsAbout": ["Software Engineering", "Electronics", "DIY", "Making", "Programming"],
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://www.velt.org/"
-      }
-    }
-    </script>
-    
+     <title>Rein's Cyberspacesplace</title>
     <style>
         * {
             margin: 0;
@@ -186,43 +155,21 @@
 <body>
     <div id="scan-lines"></div>
     
-    <main id="splash-container">
-        <h1 id="title">░░ REIN'S CYBERSPACESPLACE ░░</h1>
+    <div id="splash-container">
+        <div id="title">░░ REIN'S CYBERSPACESPLACE ░░</div>
         
         <div class="rainbow-line"></div>
         
-        <pre id="ascii-art" role="img" aria-label="ASCII art banner with Rein Velt's name"></pre>
+        <div id="ascii-art"></div>
         
         <div class="rainbow-line"></div>
         
-        <p id="subtitle">[ WELCOME TO THE MATRIX ]</p>
+        <div id="subtitle">[ WELCOME TO THE MATRIX ]</div>
         
-        <noscript>
-            <p style="color: #ff0000; margin-top: 20px;">JavaScript is required. Please enable JavaScript or <a href="sitemap.html" style="color: #00ff00;">click here to enter</a>.</p>
-        </noscript>
+        <button id="enter-button" onclick="enterSite()">[ ENTER ]</button>
         
-        <button id="enter-button" onclick="enterSite()" aria-label="Enter website">[ ENTER ]</button>
-        
-        <div id="loading-text" aria-live="polite">█ INITIALIZING SYSTEM █</div>
-        
-        <!-- SEO-friendly content for crawlers -->
-        <div style="position: absolute; left: -9999px; top: -9999px;">
-            <h2>About Rein Velt</h2>
-            <p>Welcome to the personal homepage of Rein Velt, a software engineer and maker based in the Netherlands. 
-            This website contains my curriculum vitae, blog posts about electronics and DIY projects, 
-            and a repository of my hobbies and technical work. Most content is in Dutch, but international 
-            visitors can use Google Translate for translation.</p>
-            <nav>
-                <h3>Main sections:</h3>
-                <ul>
-                    <li><a href="cv/curriculumvitae.html">Curriculum Vitae</a></li>
-                    <li><a href="blog/">Blog</a></li>
-                    <li><a href="projects/">Projects</a></li>
-                    <li><a href="sitemap.html">Sitemap</a></li>
-                </ul>
-            </nav>
-        </div>
-    </main>
+        <div id="loading-text">█ INITIALIZING SYSTEM █</div>
+    </div>
 
     <script>
         const asciiArt = `
